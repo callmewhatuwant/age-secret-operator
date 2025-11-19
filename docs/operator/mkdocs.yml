@@ -1,0 +1,28 @@
+remote_name: origin
+remote_branch: docs
+site_name: AgeSecretsOperator
+theme:
+  name: material
+  language: en
+  features:
+    - content.code.copy
+    - navigation.sections
+    - search.suggest
+    - search.highlight
+    - version
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
+plugins:
+  - mike:
+      deploy_prefix: docs
+extra:
+  version:
+    provider: mike

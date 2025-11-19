@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "age-secrets.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: age-secret-controller
+  {{- include "age-secrets.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.ageSecretController.replicas }}
+  selector:
+    matchLabels:
+      app: age-secret-controller
+    {{- include "age-secrets.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: age-secret-controller
+      {{- include "age-secrets.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "age-secrets.fullname" . }}
+      containers:
+        - name: controller
+          image: {{ .Values.ageSecretController.controller.image.repository }}:{{ .Values.ageSecretController.controller.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.ageSecretController.controller.imagePullPolicy }}
+          ports:
+            - containerPort: 8080
+              name: metrics
+              protocol: TCP
+          resources: {{- toYaml .Values.ageSecretController.controller.resources | nindent 12 }}
+          securityContext: {{- toYaml .Values.ageSecretController.controller.containerSecurityContext | nindent 12 }}
+          args:
+            - --leader-elect={{ default true .Values.ageSecretController.leaderElection.enabled }}
+            - --leader-election-namespace={{ default .Release.Namespace .Values.ageSecretController.leaderElection.namespace }}

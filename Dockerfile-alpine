@@ -1,0 +1,6 @@
+# Build the manager binary
+FROM docker.io/alpine:3.22.2
+
+RUN apk add --no-cache kubectl age
+
+ENTRYPOINT ["/bin/sh"]

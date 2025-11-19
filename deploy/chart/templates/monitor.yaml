@@ -1,0 +1,22 @@
+{{- if .Values.ServiceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "age-secrets.fullname" . }}-monitor
+  namespace: cattle-monitoring-system
+  labels:
+    app: age-secret-controller
+    release: rancher-monitoring
+  {{- include "age-secrets.labels" . | nindent 4 }}
+spec:
+  namespaceSelector:
+    matchNames:
+      - age-system
+  endpoints:
+  {{- toYaml .Values.ServiceMonitor.endpoints | nindent 2 }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: age-secret-operator
+      {{- include "age-secrets.selectorLabels" . | nindent 6 }}
+{{- end }}
+

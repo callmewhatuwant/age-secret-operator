@@ -1,0 +1,66 @@
+## name override
+fullnameOverride: age-secret-controller
+ageSecretController:
+
+## leader election
+  leaderElection:
+    enabled: true
+    namespace: age-system
+
+  ## replicas for ha
+  replicas: 3
+
+  controller:
+    ## image
+    image:
+      repository: callmewhatuwant/age-secrets-operator
+      tag: 0.0.1
+    imagePullPolicy: IfNotPresent
+
+    ## resources
+    resources:
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+
+    ## security
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      runAsNonRoot: true
+      runAsUser: 65532
+
+## prometheus
+metricsService:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      name: metrics
+      targetPort: 8080
+
+## monitor for prometheus
+ServiceMonitor:
+  enabled: true
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
+
+## job
+ageKeyRotation:
+  schedule: "0 0 1 * *"
+
+  ## initial key
+  initialRun:
+    enabled: true
+
+  ## image for cron and init job
+  image:
+    repository: callmewhatuwant/age-job
+    tag: "3.22.2"
+    pullPolicy: IfNotPresent

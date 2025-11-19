@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "age-secrets.fullname" . }}-metrics
+  labels:
+    app: age-secret-controller
+  {{- include "age-secrets.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.metricsService.type }}
+  selector:
+    app.kubernetes.io/name: age-secret-operator
+    {{- include "age-secrets.selectorLabels" . | nindent 4 }}
+  ports:
+  {{- .Values.metricsService.ports | toYaml | nindent 2 }}
+
