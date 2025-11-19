@@ -2,13 +2,13 @@ apiVersion: v1
 entries:
   age-secrets:
   - apiVersion: v2
-    appVersion: 0.0.1
-    created: "2025-10-26T15:29:46.244080156+01:00"
+    appVersion: 0.0.2
+    created: "2025-11-19T03:25:32.210845548+01:00"
     description: A Helm chart for Kubernetes
-    digest: 1b74ccc6b366ec50a66ad819cbcb0b70c4dcf9c87a20183e466e47aa9cab504c
+    digest: ad0a5bbc150163cbbcc40dd26acc74ffac02eb7f617d1c7c039724a6c84c0476
     name: age-secrets
     type: application
     urls:
-    - https://callmewhatuwant.github.io/sealed-age-operator/age-secrets-0.0.1.tgz
-    version: 0.0.1
-generated: "2025-10-26T15:29:46.243521543+01:00"
+    - https://age-secrets.com/age-secrets-0.0.2.tgz
+    version: 0.0.2
+generated: "2025-11-19T03:25:32.210172568+01:00"
