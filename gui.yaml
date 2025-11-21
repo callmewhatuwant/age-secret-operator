@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: age-gui
+  namespace: age-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: apps.deployment-age-system-age-gui
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: age-gui
+        workload.user.cattle.io/workloadselector: apps.deployment-age-system-age-gui
+      namespace: age-system
+    spec:
+      affinity: {}
+      containers:
+        - image: callmewhatuwant/age-gui:alpine3.22-perl
+          imagePullPolicy: Always
+          name: container-0
+          resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 101
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: age-gui
+  namespace: age-system
+spec:
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: age-gui
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: age-gui
+  namespace: age-system
+spec:
+  rules:
+    - host: age-gui.local
+      http:
+        paths:
+          - backend:
+              service:
+                name: age-gui
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
