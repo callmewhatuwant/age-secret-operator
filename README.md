@@ -26,8 +26,8 @@ with these keys.
 
 ### To Deploy on the cluster
 
-* if you wanna build the image by urself
-* I reccomend to use my prebuid images
+* If you wanna build the image by yourself.
+* I recommend to use my prebuilt images.
 
 **Build and push your image to the location specified by `IMG`:**
 
