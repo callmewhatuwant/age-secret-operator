@@ -1,11 +1,9 @@
 # age-secret-operator
-// TODO(user): Add simple overview of use/purpose
 
 * Controller to decrypt secrets from a crd.
 * Secrets must be encrypted via age.
 
 ## Description
-// TODO(user): An in-depth paragraph about your project and overview of use  
 
 The Controller can be installed via helm or manifests (helm is prefered).
 Also the Crd must be installed.
