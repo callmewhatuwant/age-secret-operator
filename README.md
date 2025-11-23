@@ -25,10 +25,13 @@ with these keys.
 - Access to a Kubernetes v1.11.3+ cluster.
 
 ### To Deploy on the cluster
+
+*if you wanna build the image by urself
+** I reccomend to use my prebuid images**
 **Build and push your image to the location specified by `IMG`:**
 
 ```sh
-make docker-build docker-push IMG=<some-registry>/age-secret-operator:tag
+make docker-build-(alpine,op,gui) docker-push IMG=<some-registry>/age-secret-operator:tag
 ```
 
 **NOTE:** This image ought to be published in the personal registry you specified.
@@ -44,7 +47,7 @@ make install
 **Deploy the Manager to the cluster with the image specified by `IMG`:**
 
 ```sh
-make deploy IMG=<some-registry>/age-secret-operator:tag
+make deploy IMG=dockerhub.io/callmewhatuwant/age-secret-operator:tag
 ```
 
 > **NOTE**: If you encounter RBAC errors, you may need to grant yourself cluster-admin
