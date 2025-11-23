@@ -1,8 +1,19 @@
 # age-secret-operator
 // TODO(user): Add simple overview of use/purpose
 
+* Controller to decrypt secrets from a crd.
+* Secrets must be encrypted via age.
+
 ## Description
 // TODO(user): An in-depth paragraph about your project and overview of use
+The Controller can be installed via helm or manifests (helm is prefered).
+Also the Crd must be installed.
+After the deplyoment, a job runs wich creats a secret, with an age private an public key.
+This secret should be used to encrypt ur secret values.
+Every first of the month a new sectet for encrypting will be generated.
+The controller can usw all keys in his namesapxe to decrypt crd in evry namespace.
+Please not if u delete a secret u will not be able to decrypt the crd resource wich got encrypted
+with these keys. 
 
 ## Getting Started
 
