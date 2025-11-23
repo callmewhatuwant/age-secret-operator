@@ -24,10 +24,10 @@ with these keys.
 - kubectl version v1.11.3+.
 - Access to a Kubernetes v1.11.3+ cluster.
 
-### To Deploy on the cluster
+### To Deploy on the cluster with makefile
 
 * If you wanna build the image by yourself.
-* I recommend to use my prebuilt images.
+* I recommend to use my prebuilt images and to use the helm section
 
 **Build and push your image to the location specified by `IMG`:**
 
@@ -81,6 +81,13 @@ make uninstall
 ```sh
 make undeploy
 ```
+
+## Helm
+
+**Checkout my docs wich supports the latests or older chart versions**
+
+<a href="https://age-secrets.com" target="_blank">age-secrets.com</a>
+
 
 ## Project Distribution
 
