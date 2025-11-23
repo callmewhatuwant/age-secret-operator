@@ -12,7 +12,7 @@ Also the Crd must be installed.
 After the deplyoment, a job runs wich creats a secret, with an age private and public key.
 This secret should be used to encrypt your secret values.
 Every first of the month a new secret for encrypting will be generated.
-The controller can use all keys in his namespace to decrypt the crd component in evry namespace.
+The controller can use all keys in his namespace to decrypt the crd component in every namespace.
 Please not if you delete a secret u will not be able to decrypt the crd resource wich got encrypted
 with these keys. 
 
