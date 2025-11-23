@@ -84,7 +84,7 @@ make undeploy
 
 ## Helm
 
-**Checkout my docs wich supports the latests or older chart versions**
+**Checkout my docs wich supports different chart versions**
 
 <a href="https://age-secrets.com" target="_blank">age-secrets.com</a>
 
