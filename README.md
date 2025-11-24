@@ -90,7 +90,7 @@ make undeploy
 
 
 ## Project Distribution: Todo
-
+// I have to change this part </br>
 Following the options to release and provide this solution to the users.
 
 ### By providing a bundle with all YAML files
