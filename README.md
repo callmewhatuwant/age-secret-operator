@@ -3,6 +3,8 @@
 * Controller to decrypt secrets from a crd.
 * Secrets must be encrypted via age.
 
+**checkout helm docs: <a href="https://age-secrets.com" target="_blank">age-secrets.com</a>**
+
 ## Description
 
 The Controller can be installed via helm or manifests (helm is prefered).
