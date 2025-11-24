@@ -31,7 +31,7 @@ ageSecretController:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-         - ALL
+        - ALL
       runAsNonRoot: true
       runAsUser: 65532
 
@@ -65,22 +65,25 @@ ageKeyRotation:
     tag: "3.22.2"
     pullPolicy: IfNotPresent
 
+## gui
 ageGui:
   enabled: false
   replicas: 1
 
+  # image for gui
   image:
     repository: callmewhatuwant/age-gui
     tag: "alpine3.22-perl"
-
-  imagePullPolicy: IfNotPresent
-
+    pullPolicy: IfNotPresent
+    
+  # strategy for updating
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: "25%"
       maxUnavailable: "25%"
 
+  # sec context
   containerSecurityContext:
     allowPrivilegeEscalation: false
     capabilities:
@@ -89,6 +92,7 @@ ageGui:
     runAsNonRoot: true
     runAsUser: 101
 
+  # service for gui
   service:
     type: ClusterIP
     ports:
@@ -97,6 +101,7 @@ ageGui:
         targetPort: 8080
         protocol: TCP
 
+  # ingress for gui
   ingress:
     enabled: false
     host: age-gui.local
