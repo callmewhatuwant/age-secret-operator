@@ -14,7 +14,7 @@ ageSecretController:
     ## image
     image:
       repository: callmewhatuwant/age-secrets-operator
-      tag: 0.0.1
+      tag: 0.0.5
     imagePullPolicy: IfNotPresent
 
     ## resources
@@ -31,7 +31,7 @@ ageSecretController:
       allowPrivilegeEscalation: false
       capabilities:
         drop:
-        - ALL
+         - ALL
       runAsNonRoot: true
       runAsUser: 65532
 
@@ -69,9 +69,8 @@ ageGui:
   replicas: 1
 
   image:
-    repository: callmewhatuwant
-    image: age-gui
-      tag: "alpine3.22-perl"
+    repository: callmewhatuwant/age-gui
+    tag: "alpine3.22-perl"
 
   imagePullPolicy: IfNotPresent
 
@@ -82,14 +81,12 @@ ageGui:
       maxUnavailable: "25%"
 
   containerSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 101
-    privileged: false
-    readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
     capabilities:
-        drop:
+      drop:
         - ALL
+    runAsNonRoot: true
+    runAsUser: 101
 
   service:
     type: ClusterIP

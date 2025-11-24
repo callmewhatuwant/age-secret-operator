@@ -1,4 +1,4 @@
-piVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "age-secrets.fullname" . }}-gui
@@ -16,12 +16,10 @@ spec:
   selector:
     matchLabels:
       app: age-gui
-    {{- include "ageGui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
         app: age-gui
-      {{- include "ageGui.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: age-gui
@@ -29,11 +27,10 @@ spec:
             - containerPort: 8080
               name: gui
               protocol: TCP
-          image: {{ .Values.ageGui.image.repository }}:{{ .Values.ageGui.container0.image.tag | default .Chart.AppVersion }}
+          image: {{ .Values.ageGui.image.repository }}:{{ .Values.ageGui.image.tag | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.ageGui.imagePullPolicy }}
           resources: {}
-          securityContext: {{- toYaml .Values.ageGui.containerSecurityContext
-          | nindent 10 }}
+          securityContext: {{- toYaml .Values.ageGui.containerSecurityContext | nindent 12 }}
       restartPolicy: Always
 ---
 apiVersion: v1
@@ -47,7 +44,6 @@ spec:
   type: {{ .Values.ageGui.service.type }}
   selector:
     app: age-gui
-  {{- include "ageGui.selectorLabels" . | nindent 6 }}
   ports:
   {{- .Values.ageGui.service.ports | toYaml | nindent 2 }}
 ---
