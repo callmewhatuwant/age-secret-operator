@@ -118,7 +118,7 @@ Ensure you have the required tools installed (Go, Kubernetes CLI tools, controll
 
 Run the following command to see all available development targets:
 
-```bash
+```sh
 make help
 ``` 
 
