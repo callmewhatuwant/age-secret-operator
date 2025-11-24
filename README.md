@@ -118,9 +118,15 @@ Ensure you have the required tools installed (Go, Kubernetes CLI tools, controll
 
 Run the following command to see all available development targets:
 
+```bash
+make help
+``` 
+
 **NOTE:** Run `make help` for more information on all potential `make` targets
 
-More information can be found via the [Kubebuilder Documentation](https://book.kubebuilder.io/introduction.html)
+Once you have implemented your changes and you believe the feature or fix is useful,  
+**you are welcome to open a Pull Request**. 
+Please include a short explanation of the change and why it improves the project.
 
 ## License
 
