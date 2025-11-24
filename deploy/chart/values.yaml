@@ -64,3 +64,40 @@ ageKeyRotation:
     repository: callmewhatuwant/age-job
     tag: "3.22.2"
     pullPolicy: IfNotPresent
+
+ageGui:
+  replicas: 1
+
+  image:
+    repository: callmewhatuwant
+    image: age-gui
+      tag: "alpine3.22-perl"
+
+  imagePullPolicy: IfNotPresent
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "25%"
+
+  containerSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 101
+    privileged: false
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    capabilities:
+        drop:
+        - ALL
+
+  service:
+    type: ClusterIP
+    ports:
+      - name: http
+        port: 80
+        targetPort: 8080
+        protocol: TCP
+
+  ingress:
+    host: age-gui.local

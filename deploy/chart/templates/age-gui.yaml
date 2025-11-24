@@ -1,0 +1,72 @@
+piVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "age-secrets.fullname" . }}-gui
+  labels:
+    app: age-gui
+  {{- include "age-secrets.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.ageGui.replicas }}
+  strategy:
+    rollingUpdate:
+      maxSurge: {{ .Values.ageGui.strategy.rollingUpdate.maxSurge | quote }}
+      maxUnavailable: {{ .Values.ageGui.strategy.rollingUpdate.maxUnavailable | quote
+        }}
+    type: {{ .Values.ageGui.strategy.type | quote }}
+  selector:
+    matchLabels:
+      app: age-gui
+    {{- include "ageGui.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: age-gui
+      {{- include "ageGui.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: age-gui
+          ports:
+            - containerPort: 8080
+              name: gui
+              protocol: TCP
+          image: {{ .Values.ageGui.image.repository }}:{{ .Values.ageGui.container0.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.ageGui.imagePullPolicy }}
+          resources: {}
+          securityContext: {{- toYaml .Values.ageGui.containerSecurityContext
+          | nindent 10 }}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "age-secrets.fullname" . }}-gui
+  labels:
+    app: age-gui
+  {{- include "age-secrets.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.ageGui.service.type }}
+  selector:
+    app: age-gui
+  {{- include "ageGui.selectorLabels" . | nindent 6 }}
+  ports:
+  {{- .Values.ageGui.service.ports | toYaml | nindent 2 }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "age-secrets.fullname" . }}-gui
+  labels:
+    app: age-gui
+  {{- include "age-secrets.labels" . | nindent 4 }}
+spec:
+  rules:
+  - host: {{ .Values.ageGui.ingress.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "age-secrets.fullname" . }}-gui
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
