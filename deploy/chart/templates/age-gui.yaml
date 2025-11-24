@@ -55,14 +55,15 @@ metadata:
     app: age-gui
   {{- include "age-secrets.labels" . | nindent 4 }}
 spec:
+  ingressClassName: nginx
   rules:
-  - host: {{ .Values.ageGui.ingress.host }}
-    http:
-      paths:
-      - backend:
-          service:
-            name: {{ include "age-secrets.fullname" . }}-gui
-            port:
-              number: 8080
-        path: /
-        pathType: Prefix
+    - host: {{ .Values.ageGui.ingress.host }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "age-secrets.fullname" . }}-gui
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
