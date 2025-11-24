@@ -8,16 +8,16 @@ name: trivy-scan
 on:
   workflow_dispatch:
     inputs:
-      op_img: 
+      img_op: 
         description: 'Img for op'
         required: true
         default: 'callmewhatuwant/age-secrets-operator'
-      job_img: 
-        description: 'Img for op'
+      img_job: 
+        description: 'Img for job'
         required: true
         default: 'callmewhatuwant/age-job'
-      gui_img: 
-        description: 'Img for op'
+      img_gui: 
+        description: 'Img for gui'
         required: true
         default: 'callmewhatuwant/age-gui'
       tag_op:
