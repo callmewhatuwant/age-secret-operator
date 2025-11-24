@@ -8,6 +8,18 @@ name: trivy-scan
 on:
   workflow_dispatch:
     inputs:
+      op_img: 
+        description: 'Img for op'
+        required: true
+        default: 'callmewhatuwant/age-secrets-operator'
+      job_img: 
+        description: 'Img for op'
+        required: true
+        default: 'callmewhatuwant/age-job'
+      gui_img: 
+        description: 'Img for op'
+        required: true
+        default: 'callmewhatuwant/age-gui'
       tag_op:
         description: 'Tag for op'
         required: true
@@ -33,7 +45,7 @@ jobs:
       - name: Scan age-secrets-operator
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: "callmewhatuwant/age-secrets-operator:${{ github.event.inputs.tag_op }}"
+          image-ref: "${{ github.event.inputs.img_op }}:${{ github.event.inputs.tag_op }}"
           format: template
           template: "@/contrib/sarif.tpl"
           output: "trivy-results-age-secrets-operator.sarif"
@@ -48,7 +60,7 @@ jobs:
       - name: Scan age-job
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: "callmewhatuwant/age-job:${{ github.event.inputs.tag_job }}"
+          image-ref: "${{ github.event.inputs.img_job }}:${{ github.event.inputs.tag_job }}"
           format: template
           template: "@/contrib/sarif.tpl"
           output: "trivy-results-age-job.sarif"
@@ -63,7 +75,7 @@ jobs:
       - name: Scan age-gui
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: "callmewhatuwant/age-gui:${{ github.event.inputs.tag_gui }}"
+          image-ref: "${{ github.event.inputs.img_gui }}:${{ github.event.inputs.tag_gui }}"
           format: template
           template: "@/contrib/sarif.tpl"
           output: "trivy-results-age-gui.sarif"
