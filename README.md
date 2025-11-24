@@ -85,18 +85,36 @@ make uninstall
 ```sh
 make undeploy
 ```
-# Contributing
+## Contributing
 
 Contributions are welcome!  
-If you want to report an issue, request a feature, or open a pull request, please follow the guidelines below.
+You can contribute in several ways:
 
-## How to Contribute
+- **Report issues** (bugs, unexpected behavior, documentation gaps)
+- **Request new features**
+- **Submit pull requests**
+- **Improve documentation or examples**
 
-### 1. Fork the repository
-Create a fork of this project and work in a feature branch.
+---
 
-### 2. Set up your environment
-Make sure you have the required tools installed (Go, Kubernetes tools, controller-runtime dependencies).
+### Reporting Issues & Requesting Features
+
+If you encounter a bug or want to request a new feature:
+
+1. Open a new **GitHub Issue**
+2. Describe the problem or request clearly
+3. Add steps to reproduce (if applicable)
+4. Include environment details (Go version, Kubernetes version, OS, etc.)
+
+---
+
+### Contributing Code (Pull Requests)
+
+#### 1. Fork the repository
+Create a fork of this project and work in a dedicated feature branch.
+
+#### 2. Set up your environment
+Ensure you have the required tools installed (Go, Kubernetes CLI tools, controller-runtime).
 
 Run the following command to see all available development targets:
 
