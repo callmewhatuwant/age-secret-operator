@@ -28,6 +28,7 @@ jobs:
       contents: read
       security-events: write
       actions: read
+
     steps:
       - name: Scan age-secrets-operator
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
@@ -38,6 +39,12 @@ jobs:
           output: "trivy-results-age-secrets-operator.sarif"
           severity: "CRITICAL,HIGH"
 
+      - name: Upload age-secrets-operator SARIF
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: "trivy-results-age-secrets-operator.sarif"
+          category: "trivy-op"
+
       - name: Scan age-job
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
@@ -46,6 +53,12 @@ jobs:
           template: "@/contrib/sarif.tpl"
           output: "trivy-results-age-job.sarif"
           severity: "CRITICAL,HIGH"
+
+      - name: Upload age-job SARIF
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: "trivy-results-age-job.sarif"
+          category: "trivy-job"
 
       - name: Scan age-gui
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
@@ -56,11 +69,8 @@ jobs:
           output: "trivy-results-age-gui.sarif"
           severity: "CRITICAL,HIGH"
 
-      - name: Merge SARIF files
-        run: |
-          jq -s '{runs: map(.runs) | add}' trivy-results-*.sarif > trivy-results-merged.sarif
-
-      - name: Upload merged SARIF
+      - name: Upload age-gui SARIF
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: "trivy-results-merged.sarif"
+          sarif_file: "trivy-results-age-gui.sarif"
+          category: "trivy-gui"
