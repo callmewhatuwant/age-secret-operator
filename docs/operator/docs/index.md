@@ -1,7 +1,7 @@
 # Docs
 
 Welcome to the documentation.</br>
-The code and chart is avalible at [github.com](https://github.com/callmewhatuwant/age-secret-operator).
+The code and chart is avalible at [github.com](https://github.com/callmewhatuwant/age-secret-operator){target="_blank"}.
 
 ## Getting started
 
@@ -209,11 +209,11 @@ ageGui:
 ## Issue
 
 * Found a bug or have a feature request?
-* Please open an issue on [github.com](https://github.com/callmewhatuwant/age-secret-operator).
+* Please open an issue on [github.com](https://github.com/callmewhatuwant/age-secret-operator){target="_blank"}.
 
 ## Other projects by me
 
-* my portfolio [portfolio-nick.de](https://www.portfolio-nick.de)
+* my portfolio [portfolio-nick.de](https://www.portfolio-nick.de){target="_blank"}
 
 ## Support me if you want
 
