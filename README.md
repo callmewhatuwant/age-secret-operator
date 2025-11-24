@@ -85,8 +85,20 @@ make uninstall
 ```sh
 make undeploy
 ```
-## Contributing
-// TODO(user): Add detailed information on how you would like others to contribute to this project
+# Contributing
+
+Contributions are welcome!  
+If you want to report an issue, request a feature, or open a pull request, please follow the guidelines below.
+
+## How to Contribute
+
+### 1. Fork the repository
+Create a fork of this project and work in a feature branch.
+
+### 2. Set up your environment
+Make sure you have the required tools installed (Go, Kubernetes tools, controller-runtime dependencies).
+
+Run the following command to see all available development targets:
 
 **NOTE:** Run `make help` for more information on all potential `make` targets
 
