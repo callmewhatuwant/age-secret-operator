@@ -48,7 +48,7 @@ jobs:
           severity: "CRITICAL,HIGH"
 
       - name: Scan age-gui
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b7d117d53d21edfe
+        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
           image-ref: "callmewhatuwant/age-gui:${{ github.event.inputs.tag_gui }}"
           format: template
