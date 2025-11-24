@@ -7,36 +7,69 @@ name: trivy-scan
 
 on:
   workflow_dispatch:
-   inputs:
-      image:
+    inputs:
+      tag_op:
+        description: 'Tag for op'
         required: true
-        default: 'age-secrets-operator'
-      tag:
+        default: '0.0.1'
+      tag_job:
+        description: 'Tag for job'
         required: true
-        default: 'latest'
-
-permissions:
-  contents: read
+        default: '3.22.2'
+      tag_gui:
+        description: 'Tag for gui'
+        required: true
+        default: 'alpine3.22-perl'
 
 jobs:
   build:
-    permissions:
-      contents: read # for actions/checkout to fetch code
-      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     name: scan
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+
     steps:
-      - name: Run Trivy vulnerability scanner
+      - name: Scan age-secrets-operator
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: 'callmewhatuwant/${{ inputs.image }}:${{ inputs.tag }}'
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL,HIGH'
+          image-ref: "callmewhatuwant/age-secrets-operator:${{ github.event.inputs.tag_op }}"
+          format: "template"
+          template: "@/contrib/sarif.tpl"
+          output: "trivy-results-age-secrets-operator.sarif"
+          severity: "CRITICAL,HIGH"
 
-      - name: Upload Trivy scan results to GitHub Security tab
+      - name: Upload results age-secrets-operator
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: "trivy-results-age-secrets-operator.sarif"
+
+      - name: Scan age-job
+        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        with:
+          image-ref: "callmewhatuwant/age-job:${{ github.event.inputs.tag_job }}"
+          format: "template"
+          template: "@/contrib/sarif.tpl"
+          output: "trivy-results-age-job.sarif"
+          severity: "CRITICAL,HIGH"
+
+      - name: Upload results age-job
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: "trivy-results-age-job.sarif"
+
+      - name: Scan age-gui
+        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        with:
+          image-ref: "callmewhatuwant/age-gui:${{ github.event.inputs.tag_gui }}"
+          format: "template"
+          template: "@/contrib/sarif.tpl"
+          output: "trivy-results-image3.sarif"
+          severity: "CRITICAL,HIGH"
+
+      - name: Upload results age-gui
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: "trivy-results-age-gui.sarif"
