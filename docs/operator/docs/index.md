@@ -107,7 +107,7 @@ ageSecretController:
     ## image
     image:
       repository: callmewhatuwant/age-secrets-operator
-      tag: 0.0.1
+      tag: 0.0.5
     imagePullPolicy: IfNotPresent
 
     ## resources
@@ -157,6 +157,47 @@ ageKeyRotation:
     repository: callmewhatuwant/age-job
     tag: "3.22.2"
     pullPolicy: IfNotPresent
+
+## gui
+ageGui:
+  enabled: false
+  replicas: 1
+
+  # image for gui
+  image:
+    repository: callmewhatuwant/age-gui
+    tag: "alpine3.22-perl"
+    pullPolicy: IfNotPresent
+    
+  # strategy for updating
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "25%"
+
+  # sec context
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    runAsNonRoot: true
+    runAsUser: 101
+
+  # service for gui
+  service:
+    type: ClusterIP
+    ports:
+      - name: http
+        port: 80
+        targetPort: 8080
+        protocol: TCP
+
+  # ingress for gui
+  ingress:
+    enabled: false
+    host: age-gui.local
 ```
 
 ## Enhancements
