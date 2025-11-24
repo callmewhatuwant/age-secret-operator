@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: {{ include "age-secrets.fullname" . }}-job
-  namespace: {{ .Release.Namespace }}
-  labels:
-  {{- include "age-secrets.labels" . | nindent 4 }}
