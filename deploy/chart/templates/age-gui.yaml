@@ -1,3 +1,4 @@
+{{- if .Values.ageGui.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,7 +33,9 @@ spec:
           resources: {}
           securityContext: {{- toYaml .Values.ageGui.containerSecurityContext | nindent 12 }}
       restartPolicy: Always
+{{- end }}
 ---
+{{- if .Values.ageGui.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -46,7 +49,9 @@ spec:
     app: age-gui
   ports:
   {{- .Values.ageGui.service.ports | toYaml | nindent 2 }}
+{{- end }}
 ---
+{{- if .Values.ageGui.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -67,3 +72,4 @@ spec:
                   number: 8080
             path: /
             pathType: Prefix
+{{- end }}

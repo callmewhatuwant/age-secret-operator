@@ -66,6 +66,7 @@ ageKeyRotation:
     pullPolicy: IfNotPresent
 
 ageGui:
+  enabled: false
   replicas: 1
 
   image:
@@ -97,4 +98,5 @@ ageGui:
         protocol: TCP
 
   ingress:
+    enabled: false
     host: age-gui.local
