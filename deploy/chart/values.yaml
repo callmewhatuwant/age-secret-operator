@@ -67,7 +67,7 @@ ageKeyRotation:
 
 ## gui
 ageGui:
-  enabled: false
+  enabled: true
   replicas: 1
 
   # image for gui
@@ -75,6 +75,15 @@ ageGui:
     repository: callmewhatuwant/age-gui
     tag: "alpine3.22-perl"
     pullPolicy: IfNotPresent
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    
     
   # strategy for updating
   strategy:
@@ -103,5 +112,5 @@ ageGui:
 
   # ingress for gui
   ingress:
-    enabled: false
+    enabled: true
     host: age-gui.local

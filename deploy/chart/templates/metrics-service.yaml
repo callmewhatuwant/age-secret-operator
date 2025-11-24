@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "age-secrets.fullname" . }}-metrics
+  namespace: {{ .Release.Namespace }}
   labels:
     app: age-secret-controller
   {{- include "age-secrets.labels" . | nindent 4 }}
