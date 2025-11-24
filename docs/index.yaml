@@ -3,12 +3,12 @@ entries:
   age-secrets:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2025-11-24T12:59:26.685202529Z"
+    created: "2025-11-24T13:29:50.127369491Z"
     description: A Helm chart for Kubernetes
-    digest: 69aad78b75fd5adb6d24b9b27cf2b30c2e7bb2c502ca73f986c86acd6fb0f43c
+    digest: 64b578ea7c02725cb9992febea0608d61e99c31ce6bce8fa4b25415dd1dfd395
     name: age-secrets
     type: application
     urls:
     - https://age-secrets.com/age-secrets-0.0.1.tgz
     version: 0.0.1
-generated: "2025-11-24T12:59:26.684258605Z"
+generated: "2025-11-24T13:29:50.126523254Z"
