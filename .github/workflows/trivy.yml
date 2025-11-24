@@ -23,53 +23,26 @@ on:
 
 jobs:
   build:
-    name: scan
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
       security-events: write
       actions: read
 
     steps:
-      - name: Scan age-secrets-operator
+      - name: Scan multiple images with Trivy
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
-          image-ref: "callmewhatuwant/age-secrets-operator:${{ github.event.inputs.tag_op }}"
-          format: "template"
+          image-ref: |
+            callmewhatuwant/age-secrets-operator:${{ github.event.inputs.tag_op }}
+            callmewhatuwant/age-job:${{ github.event.inputs.tag_job }}
+            callmewhatuwant/age-gui:${{ github.event.inputs.tag_gui }}
+          format: template
           template: "@/contrib/sarif.tpl"
-          output: "trivy-results-age-secrets-operator.sarif"
+          output: "trivy-results.sarif"
           severity: "CRITICAL,HIGH"
 
-      - name: Upload results age-secrets-operator
+      - name: Upload Trivy SARIF results
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: "trivy-results-age-secrets-operator.sarif"
-
-      - name: Scan age-job
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
-        with:
-          image-ref: "callmewhatuwant/age-job:${{ github.event.inputs.tag_job }}"
-          format: "template"
-          template: "@/contrib/sarif.tpl"
-          output: "trivy-results-age-job.sarif"
-          severity: "CRITICAL,HIGH"
-
-      - name: Upload results age-job
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: "trivy-results-age-job.sarif"
-
-      - name: Scan age-gui
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
-        with:
-          image-ref: "callmewhatuwant/age-gui:${{ github.event.inputs.tag_gui }}"
-          format: "template"
-          template: "@/contrib/sarif.tpl"
-          output: "trivy-results-image3.sarif"
-          severity: "CRITICAL,HIGH"
-
-      - name: Upload results age-gui
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: "trivy-results-age-gui.sarif"
+          sarif_file: "trivy-results.sarif"
