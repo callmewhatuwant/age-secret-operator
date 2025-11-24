@@ -45,7 +45,7 @@ metricsService:
 
 ## monitor for prometheus
 ServiceMonitor:
-  enabled: true
+  enabled: false
   endpoints:
     - port: metrics
       interval: 30s
@@ -67,7 +67,7 @@ ageKeyRotation:
 
 ## gui
 ageGui:
-  enabled: true
+  enabled: false
   replicas: 1
 
   # image for gui
@@ -83,7 +83,6 @@ ageGui:
     requests:
       cpu: 100m
       memory: 64Mi
-    
     
   # strategy for updating
   strategy:
@@ -112,5 +111,5 @@ ageGui:
 
   # ingress for gui
   ingress:
-    enabled: true
+    enabled: false
     host: age-gui.local
