@@ -22,8 +22,6 @@ with these keys.
 - kubectl version v1.11.3+.
 - Access to a Kubernetes v1.11.3+ cluster.
 
-
-
 ## Helm
 
 **Checkout my docs wich supports different chart versions**
