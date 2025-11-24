@@ -3,8 +3,6 @@
 * Controller to decrypt secrets from a crd.
 * Secrets must be encrypted via age.
 
-**checkout helm docs: <a href="https://age-secrets.com" target="_blank">age-secrets.com</a>**
-
 ## Description
 
 The Controller can be installed via helm or manifests (helm is prefered).
@@ -24,7 +22,13 @@ with these keys.
 - kubectl version v1.11.3+.
 - Access to a Kubernetes v1.11.3+ cluster.
 
-### To Deploy on the cluster with makefile
+## Helm
+
+**Checkout my docs wich supports different chart versions**
+
+<a href="https://age-secrets.com" target="_blank">age-secrets.com</a>
+
+## To Deploy on the cluster with makefile
 
 * If you wanna build the image by yourself.
 * I recommend to use my prebuilt images and to use the helm section
@@ -81,13 +85,6 @@ make uninstall
 ```sh
 make undeploy
 ```
-
-## Helm
-
-**Checkout my docs wich supports different chart versions**
-
-<a href="https://age-secrets.com" target="_blank">age-secrets.com</a>
-
 ## Contributing
 // TODO(user): Add detailed information on how you would like others to contribute to this project
 
