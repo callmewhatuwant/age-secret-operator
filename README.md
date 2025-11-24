@@ -28,6 +28,15 @@ with these keys.
 
 <a href="https://age-secrets.com" target="_blank">age-secrets.com</a>
 
+## kubectl apply -f
+
+ * deploy rendered helm content
+ * download and kustomize if u want.
+ * service monitor is enabled crd is needed for that
+
+```sh
+https://raw.githubusercontent.com/callmewhatuwant/age-secret-operator/main/deploy/manifests/deploy.yaml
+```
 ## To Deploy on the cluster with makefile
 
 * If you wanna build the image by yourself.
