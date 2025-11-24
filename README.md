@@ -89,7 +89,7 @@ make undeploy
 <a href="https://age-secrets.com" target="_blank">age-secrets.com</a>
 
 
-## Project Distribution
+## Project Distribution: Todo
 
 Following the options to release and provide this solution to the users.
 
