@@ -46,8 +46,7 @@ jobs:
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
           image-ref: "${{ github.event.inputs.img_op }}:${{ github.event.inputs.tag_op }}"
-          format: template
-          template: "@/contrib/sarif.tpl"
+          format: sarif
           output: "trivy-results-age-secrets-operator.sarif"
           severity: "CRITICAL,HIGH"
 
@@ -61,8 +60,7 @@ jobs:
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
           image-ref: "${{ github.event.inputs.img_job }}:${{ github.event.inputs.tag_job }}"
-          format: template
-          template: "@/contrib/sarif.tpl"
+          format: sarif
           output: "trivy-results-age-job.sarif"
           severity: "CRITICAL,HIGH"
 
@@ -76,8 +74,7 @@ jobs:
         uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
         with:
           image-ref: "${{ github.event.inputs.img_gui }}:${{ github.event.inputs.tag_gui }}"
-          format: template
-          template: "@/contrib/sarif.tpl"
+          format: sarif
           output: "trivy-results-age-gui.sarif"
           severity: "CRITICAL,HIGH"
 
