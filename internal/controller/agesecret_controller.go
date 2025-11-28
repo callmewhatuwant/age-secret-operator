@@ -150,6 +150,8 @@ func (r *AgeSecretReconciler) SetupWithManager(mgr ctrl.Manager) error {
 // decryptWithAge decrypts the provided armored AGE content using available key Secrets.
 func decryptWithAge(ctx context.Context, armored string, keySecrets []corev1.Secret, recipients []string) ([]byte, string, error) {
 	logger := log.FromContext(ctx)
+
+	encryptRuns := 0
 	for _, ks := range keySecrets {
 		name := ks.GetName()
 
@@ -174,15 +176,18 @@ func decryptWithAge(ctx context.Context, armored string, keySecrets []corev1.Sec
 
 		decR, err := age.Decrypt(src, id)
 		if err != nil {
+			encryptRuns++
 			logger.V(1).Info("decryption failed with this key", "secret", name, "err", err, "recipients_hint", recipients)
 			continue
 		}
 		plain, err := io.ReadAll(decR)
 		if err != nil {
 			logger.V(1).Info("failed to read decrypted data", "secret", name, "err", err)
+			encryptRuns++
 			continue
 		}
 		return plain, name, nil
 	}
+	logger.Info("decryption failed for all keys", "read_errors", encryptRuns)
 	return nil, "", errors.New("failed to decrypt with any available key")
 }

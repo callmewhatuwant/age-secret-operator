@@ -31,7 +31,7 @@ spec:
               protocol: TCP
           image: {{ .Values.ageGui.image.repository }}:{{ .Values.ageGui.image.tag | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.ageGui.image.pullPolicy }}
-          resources: {{ Values.ageGui.resources }}
+          resources: {{- toYaml .Values.ageSecretController.controller.resources | nindent 12 }}
           securityContext: {{- toYaml .Values.ageGui.containerSecurityContext | nindent 12 }}
       restartPolicy: Always
 {{- end }}
