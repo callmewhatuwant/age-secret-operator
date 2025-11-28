@@ -4,4 +4,6 @@ FROM docker.io/alpine:3.22.2
 RUN apk add --no-cache kubectl age
 RUN apk update && apk upgrade --no-cache
 
+USER 65532:6553
+
 ENTRYPOINT ["/bin/sh"]
