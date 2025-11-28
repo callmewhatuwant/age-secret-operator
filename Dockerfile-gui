@@ -20,6 +20,8 @@ RUN make import build
 
 FROM nginxinc/nginx-unprivileged:alpine3.22-perl
 
+RUN apk update && apk upgrade --no-cache
+
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 8080
