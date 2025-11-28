@@ -49,7 +49,7 @@ jobs:
           image-ref: "${{ github.event.inputs.img_op }}:${{ github.event.inputs.tag_op }}"
           format: sarif
           output: "trivy-results-age-secrets-operator.sarif"
-          severity: "CRITICAL,HIGH"
+          severity: "CRITICAL,HIGH,MEDIUM,LOW"
           limit-severities-for-sarif: true
 
       - name: Upload age-secrets-operator SARIF
@@ -65,7 +65,7 @@ jobs:
           image-ref: "${{ github.event.inputs.img_job }}:${{ github.event.inputs.tag_job }}"
           format: sarif
           output: "trivy-results-age-job.sarif"
-          severity: "CRITICAL,HIGH"
+          severity: "CRITICAL,HIGH,MEDIUM,LOW"
           limit-severities-for-sarif: true
 
       - name: Upload age-job SARIF
@@ -81,7 +81,7 @@ jobs:
           image-ref: "${{ github.event.inputs.img_gui }}:${{ github.event.inputs.tag_gui }}"
           format: sarif
           output: "trivy-results-age-gui.sarif"
-          severity: "CRITICAL,HIGH"
+          severity: "CRITICAL,HIGH,MEDIUM,LOW"
           limit-severities-for-sarif: true
 
       - name: Upload age-gui SARIF
