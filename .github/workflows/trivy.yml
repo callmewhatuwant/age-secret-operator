@@ -34,7 +34,7 @@ on:
         default: 'alpine3.22-perl'
 
 jobs:
-  build:
+  scan:
     runs-on: ubuntu-latest
     permissions:
       contents: read
