@@ -23,15 +23,15 @@ on:
       tag_op:
         description: 'Tag for op'
         required: true
-        default: '0.0.1'
+        default: 'latest'
       tag_job:
         description: 'Tag for job'
         required: true
-        default: '3.22.2'
+        default: 'latest'
       tag_gui:
         description: 'Tag for gui'
         required: true
-        default: 'alpine3.22-perl'
+        default: 'latest'
 
 jobs:
   scan:
