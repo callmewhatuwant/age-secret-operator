@@ -55,6 +55,15 @@ func (r *AgeSecretReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
+	if cr.Status.ObservedGeneration == cr.Generation {
+		var existing corev1.Secret
+		secretKey := types.NamespacedName{Name: cr.Name, Namespace: cr.Namespace}
+		if err := r.Get(ctx, secretKey, &existing); err == nil {
+			logger.Info("already reconciled: skipping (observed generation matches and secret exists)")
+			return ctrl.Result{}, nil
+		}
+	}
+
 	// 2. List available AGE key Secrets (by namespace and label).
 	keyList := &corev1.SecretList{}
 	if err := r.List(ctx, keyList,
