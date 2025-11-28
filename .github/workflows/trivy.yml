@@ -34,7 +34,7 @@ on:
         default: 'alpine3.22-perl'
 
 jobs:
-  build:
+  scan:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -43,12 +43,14 @@ jobs:
 
     steps:
       - name: Scan age-secrets-operator
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        uses: aquasecurity/trivy-action@0.33.1
         with:
+          version: v0.67.2
           image-ref: "${{ github.event.inputs.img_op }}:${{ github.event.inputs.tag_op }}"
           format: sarif
           output: "trivy-results-age-secrets-operator.sarif"
-          severity: "CRITICAL,HIGH"
+          #severity: "CRITICAL,HIGH,MEDIUM,LOW"
+          #limit-severities-for-sarif: true
 
       - name: Upload age-secrets-operator SARIF
         uses: github/codeql-action/upload-sarif@v4
@@ -57,12 +59,14 @@ jobs:
           category: "trivy-op"
 
       - name: Scan age-job
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        uses: aquasecurity/trivy-action@0.33.1
         with:
+          version: v0.67.2
           image-ref: "${{ github.event.inputs.img_job }}:${{ github.event.inputs.tag_job }}"
           format: sarif
           output: "trivy-results-age-job.sarif"
-          severity: "CRITICAL,HIGH"
+          #severity: "CRITICAL,HIGH,MEDIUM,LOW"
+          #limit-severities-for-sarif: true
 
       - name: Upload age-job SARIF
         uses: github/codeql-action/upload-sarif@v4
@@ -71,12 +75,14 @@ jobs:
           category: "trivy-job"
 
       - name: Scan age-gui
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        uses: aquasecurity/trivy-action@0.33.1
         with:
+          version: v0.67.2
           image-ref: "${{ github.event.inputs.img_gui }}:${{ github.event.inputs.tag_gui }}"
           format: sarif
           output: "trivy-results-age-gui.sarif"
-          severity: "CRITICAL,HIGH"
+          #severity: "CRITICAL,HIGH,MEDIUM,LOW"
+          #limit-severities-for-sarif: true
 
       - name: Upload age-gui SARIF
         uses: github/codeql-action/upload-sarif@v4
