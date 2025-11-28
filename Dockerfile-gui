@@ -20,7 +20,11 @@ RUN make import build
 
 FROM nginxinc/nginx-unprivileged:alpine3.22-perl
 
+USER root
+
 RUN apk update && apk upgrade --no-cache
+
+USER nginx
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 

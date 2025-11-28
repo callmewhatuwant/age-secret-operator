@@ -1,7 +1,7 @@
 # Image URL to use all building/pushing image targets
 IMG ?= controller:latest
 IMG_ALPINE ?=alpine-job:latest
-
+IMG_GUI ?=age-gui:latest
 # Get the currently used golang install path (in GOPATH/bin, unless GOBIN is set)
 ifeq (,$(shell go env GOBIN))
 GOBIN=$(shell go env GOPATH)/bin
@@ -117,10 +117,12 @@ run: manifests generate fmt vet ## Run a controller from your host.
 # (i.e. docker build --platform linux/arm64). However, you must enable docker buildKit for it.
 # More info: https://docs.docker.com/develop/develop-images/build_enhancements/
 
-.PHONY: docker-build
-
+.PHONY: docker-build-op docker-build-gui docker-build-alpine
 docker-build-op: ## Build docker image with the manager using Dockerfile-op.
 	$(CONTAINER_TOOL) build --no-cache -t ${IMG} -f Dockerfile-op .
+
+docker-build-gui: ## Build docker image using Dockerfile-gui.
+	$(CONTAINER_TOOL) build --no-cache -t ${IMG_GUI} -f Dockerfile-gui .
 
 docker-build-alpine: ## Build docker image with the manager using Dockerfile-alpine.
 	$(CONTAINER_TOOL) build --no-cache -t ${IMG_ALPINE} -f Dockerfile-alpine .
