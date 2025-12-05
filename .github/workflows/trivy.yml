@@ -45,7 +45,7 @@ jobs:
       - name: Scan age-secrets-operator
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          version: v0.67.2
+          version: v0.68.1
           image-ref: "${{ github.event.inputs.img_op }}:${{ github.event.inputs.tag_op }}"
           format: sarif
           output: "trivy-results-age-secrets-operator.sarif"
@@ -53,7 +53,7 @@ jobs:
           #limit-severities-for-sarif: true
 
       - name: Upload age-secrets-operator SARIF
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@v4.31.6
         with:
           sarif_file: "trivy-results-age-secrets-operator.sarif"
           category: "trivy-op"
@@ -61,7 +61,7 @@ jobs:
       - name: Scan age-job
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          version: v0.67.2
+          version: v0.68.1
           image-ref: "${{ github.event.inputs.img_job }}:${{ github.event.inputs.tag_job }}"
           format: sarif
           output: "trivy-results-age-job.sarif"
@@ -69,7 +69,7 @@ jobs:
           #limit-severities-for-sarif: true
 
       - name: Upload age-job SARIF
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@v4.31.6
         with:
           sarif_file: "trivy-results-age-job.sarif"
           category: "trivy-job"
@@ -77,7 +77,7 @@ jobs:
       - name: Scan age-gui
         uses: aquasecurity/trivy-action@0.33.1
         with:
-          version: v0.67.2
+          version: v0.68.1
           image-ref: "${{ github.event.inputs.img_gui }}:${{ github.event.inputs.tag_gui }}"
           format: sarif
           output: "trivy-results-age-gui.sarif"
@@ -85,7 +85,7 @@ jobs:
           #limit-severities-for-sarif: true
 
       - name: Upload age-gui SARIF
-        uses: github/codeql-action/upload-sarif@v4
+        uses: github/codeql-action/upload-sarif@v4.31.6
         with:
           sarif_file: "trivy-results-age-gui.sarif"
           category: "trivy-gui"
