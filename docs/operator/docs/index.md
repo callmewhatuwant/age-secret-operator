@@ -62,6 +62,12 @@ echo test123 > secret.txt
 age --armor -r "$PUBLIC_KEY" secret.txt
 ```
 
+* create namespace for testing the crd
+
+```bash
+kubectl create ns test
+```
+
 * exmaple secret crd ressource
 
 ```yaml
