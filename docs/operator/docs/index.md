@@ -69,6 +69,7 @@ kubectl create ns test
 ```
 
 * exmaple secret crd ressource
+* change password: value with your value from the age command
 
 ```yaml
 apiVersion: security.age.io/v1alpha1
@@ -94,7 +95,7 @@ spec:
 * verify
 
 ```bash
-kubectl get secret -n age-system
+kubectl get secret -n test
 ```
 
 ## Helm Options
