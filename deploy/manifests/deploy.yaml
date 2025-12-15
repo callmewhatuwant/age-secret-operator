@@ -8,7 +8,7 @@ metadata:
   labels:
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 ---
@@ -21,7 +21,7 @@ metadata:
   labels:
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 ---
@@ -33,7 +33,7 @@ metadata:
   labels:
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 rules:
@@ -83,7 +83,7 @@ metadata:
   labels:
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 roleRef:
@@ -104,7 +104,7 @@ metadata:
   labels:
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 rules:
@@ -121,7 +121,7 @@ metadata:
   labels:
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 roleRef:
@@ -143,7 +143,7 @@ metadata:
     app: age-gui
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -166,7 +166,7 @@ metadata:
     app: age-secret-controller
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -174,7 +174,7 @@ spec:
   selector:
     app.kubernetes.io/name: age-secret-operator
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
   ports:
   - name: metrics
     port: 8080
@@ -190,7 +190,7 @@ metadata:
     app: age-secret-controller
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -199,18 +199,18 @@ spec:
     matchLabels:
       app: age-secret-controller
       app.kubernetes.io/name: age-secrets
-      app.kubernetes.io/instance: release-name
+      app.kubernetes.io/instance: age-secret-operator
   template:
     metadata:
       labels:
         app: age-secret-controller
         app.kubernetes.io/name: age-secrets
-        app.kubernetes.io/instance: release-name
+        app.kubernetes.io/instance: age-secret-operator
     spec:
       serviceAccountName: age-secret-controller
       containers:
         - name: controller
-          image: callmewhatuwant/age-secrets-operator:0.0.5
+          image: callmewhatuwant/age-secrets-operator:0.0.10
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -228,8 +228,12 @@ spec:
             capabilities:
               drop:
               - ALL
+            privileged: false
+            runAsGroup: 65532
             runAsNonRoot: true
             runAsUser: 65532
+            seccompProfile:
+              type: RuntimeDefault
           args:
             - --leader-elect=true
             - --leader-election-namespace=age-system
@@ -244,7 +248,7 @@ metadata:
     app: age-gui
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -268,16 +272,26 @@ spec:
             - containerPort: 8080
               name: gui
               protocol: TCP
-          image: callmewhatuwant/age-gui:alpine3.22-perl
+          image: callmewhatuwant/age-gui:alpine3.22-perl-1
           imagePullPolicy: IfNotPresent
-          resources: {}
+          resources:
+            limits:
+              cpu: 200m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
               - ALL
+            privileged: false
+            runAsGroup: 101
             runAsNonRoot: true
             runAsUser: 101
+            seccompProfile:
+              type: RuntimeDefault
       restartPolicy: Always
 ---
 # Source: age-secrets/templates/job.yaml
@@ -287,17 +301,17 @@ metadata:
   name: age-secret-controller-age-key-rotation-init
   namespace: age-system
   labels:
-    app.kubernetes.io/instance: "release-name-job"
+    app.kubernetes.io/instance: "age-secret-operator-job"
     app.kubernetes.io/managed-by: "Helm-job"
     app.kubernetes.io/name: "age-secrets-job"
     app.kubernetes.io/version: "0.0.1-job"
-    helm.sh/chart: "age-secrets-0.0.1-job"    
+    helm.sh/chart: "age-secrets-0.0.1-job"
 spec:
   backoffLimit: 1
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: "release-name-job"
+        app.kubernetes.io/instance: "age-secret-operator-job"
         app.kubernetes.io/managed-by: "Helm-job"
         app.kubernetes.io/name: "age-secrets-job"
         app.kubernetes.io/version: "0.0.1-job"
@@ -307,7 +321,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: gen-age-key
-          image: "callmewhatuwant/age-job:3.22.2"
+          image: "callmewhatuwant/age-job:3.22.2-1"
           imagePullPolicy: IfNotPresent
           command: ["/bin/sh","-c"]
           args:
@@ -346,7 +360,7 @@ metadata:
   name: age-secret-controller-age-key-rotation
   namespace: age-system
   labels:
-    app.kubernetes.io/instance: "release-name-job"
+    app.kubernetes.io/instance: "age-secret-operator-job"
     app.kubernetes.io/managed-by: "Helm-job"
     app.kubernetes.io/name: "age-secrets-job"
     app.kubernetes.io/version: "0.0.1-job"
@@ -360,7 +374,7 @@ spec:
       template:
         metadata:
           labels:
-            app.kubernetes.io/instance: "release-name-job"
+            app.kubernetes.io/instance: "age-secret-operator-job"
             app.kubernetes.io/managed-by: "Helm-job"
             app.kubernetes.io/name: "age-secrets-job"
             app.kubernetes.io/version: "0.0.1-job"
@@ -370,7 +384,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: gen-age-key
-              image: "callmewhatuwant/age-job:3.22.2"
+              image: "callmewhatuwant/age-job:3.22.2-1"
               imagePullPolicy: IfNotPresent
               command: ["/bin/sh","-c"]
               args:
@@ -414,7 +428,7 @@ metadata:
     app: age-gui
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -423,13 +437,13 @@ spec:
     - host: age-gui.local
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Prefix
+            backend:
               service:
                 name: age-secret-controller-gui
                 port:
                   number: 8080
-            path: /
-            pathType: Prefix
 ---
 # Source: age-secrets/templates/monitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -442,7 +456,7 @@ metadata:
     release: rancher-monitoring
     helm.sh/chart: age-secrets-0.0.1
     app.kubernetes.io/name: age-secrets
-    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/instance: age-secret-operator
     app.kubernetes.io/version: "0.0.1"
     app.kubernetes.io/managed-by: Helm
 spec:
@@ -457,4 +471,4 @@ spec:
     matchLabels:
       app.kubernetes.io/name: age-secret-operator
       app.kubernetes.io/name: age-secrets
-      app.kubernetes.io/instance: release-name
+      app.kubernetes.io/instance: age-secret-operator
