@@ -76,7 +76,7 @@ apiVersion: security.age.io/v1alpha1
 kind: AgeSecret
 metadata:
   name: db-passwd
-  namespace:
+  namespace: test
 spec:
   encryptedData:
     password: |
