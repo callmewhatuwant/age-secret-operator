@@ -50,14 +50,15 @@ LATEST=$(kubectl get secrets -n age-system --no-headers -o custom-columns=":meta
 
 PUBLIC_KEY=$(kubectl get secret "$LATEST" -n age-system -o jsonpath='{.data.public}' | base64 --decode)
 
+## public key:
 echo "$PUBLIC_KEY"
-
-echo test123 > secret.txt
 ```
 
 * encrypt with ur public key
 
 ```bash
+echo test123 > secret.txt
+
 age --armor -r "$PUBLIC_KEY" secret.txt
 ```
 
