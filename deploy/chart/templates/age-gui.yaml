@@ -44,6 +44,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: age-gui
+  {{- include "age-secrets.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.ageGui.service.type }}
   selector:
