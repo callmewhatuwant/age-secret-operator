@@ -106,7 +106,7 @@ ageSecretController:
     ## image
     image:
       repository: callmewhatuwant/age-secrets-operator
-      tag: 0.0.5
+      tag: 0.0.10
     imagePullPolicy: IfNotPresent
 
     ## resources
@@ -137,7 +137,7 @@ metricsService:
 
 ## monitor for prometheus
 ServiceMonitor:
-  enabled: true
+  enabled: false
   endpoints:
     - port: metrics
       interval: 30s
@@ -154,20 +154,28 @@ ageKeyRotation:
   ## image for cron and init job
   image:
     repository: callmewhatuwant/age-job
-    tag: "3.22.2"
+    tag: "3.22.2-1"
     pullPolicy: IfNotPresent
 
 ## gui
 ageGui:
-  enabled: false
+  enabled: true
   replicas: 1
 
   # image for gui
   image:
     repository: callmewhatuwant/age-gui
-    tag: "alpine3.22-perl"
+    tag: "alpine3.22-perl-1"
     pullPolicy: IfNotPresent
-    
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+
   # strategy for updating
   strategy:
     type: RollingUpdate
@@ -197,6 +205,12 @@ ageGui:
   ingress:
     enabled: false
     host: age-gui.local
+    ingressClassName: nginx
+    annotations: []
+    tls: []
+      # - hosts:
+      #     - age-gui.local
+      #   secretName: age-gui-tls
 ```
 
 ## Enhancements
