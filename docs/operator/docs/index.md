@@ -48,16 +48,10 @@ sudo apt install age
 LATEST=$(kubectl get secrets -n age-system --no-headers -o custom-columns=":metadata.name" \
   | grep '^age-key-' | sort | tail -n1)
 
-kubectl get secret "$LATEST" -n age-system -o jsonpath='{.data.public}' | base64 --decode
-
 PUBLIC_KEY=$(kubectl get secret "$LATEST" -n age-system -o jsonpath='{.data.public}' | base64 --decode)
 
 echo "$PUBLIC_KEY"
-```
 
-* create test file
-
-```bash
 echo test123 > secret.txt
 ```
 
