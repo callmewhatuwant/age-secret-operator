@@ -463,14 +463,15 @@ The code and chart is avalible at <a href="https://github.com/callmewhatuwant/ag
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nv">PUBLIC_KEY</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LATEST</span><span class="s2">&quot;</span><span class="w"> </span>-n<span class="w"> </span>age-system<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.public}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>--decode<span class="k">)</span>
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PUBLIC_KEY</span><span class="s2">&quot;</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="nb">echo</span><span class="w"> </span>test123<span class="w"> </span>&gt;<span class="w"> </span>secret.txt
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">## public key:</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PUBLIC_KEY</span><span class="s2">&quot;</span>
 </span></code></pre></div>
 <ul>
 <li>encrypt with ur public key</li>
 </ul>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>age<span class="w"> </span>--armor<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PUBLIC_KEY</span><span class="s2">&quot;</span><span class="w"> </span>secret.txt
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">echo</span><span class="w"> </span>test123<span class="w"> </span>&gt;<span class="w"> </span>secret.txt
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>age<span class="w"> </span>--armor<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PUBLIC_KEY</span><span class="s2">&quot;</span><span class="w"> </span>secret.txt
 </span></code></pre></div>
 <ul>
 <li>exmaple secret crd ressource</li>
