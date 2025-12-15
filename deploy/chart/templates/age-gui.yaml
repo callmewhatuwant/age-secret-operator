@@ -44,7 +44,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: age-gui
-  {{- include "age-secrets.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.ageGui.service.type }}
   selector:
@@ -67,7 +66,7 @@ metadata:
     {{- . | toYaml |nindent 4 }}
   {{- end }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ .Values.ageGui.ingress.ingressClassName }}
   rules:
     - host: {{ .Values.ageGui.ingress.host }}
       http:

@@ -67,7 +67,7 @@ ageKeyRotation:
 
 ## gui
 ageGui:
-  enabled: false
+  enabled: true
   replicas: 1
 
   # image for gui
@@ -113,6 +113,7 @@ ageGui:
   ingress:
     enabled: false
     host: age-gui.local
+    ingressClassName: nginx
     annotations: []
     tls:
       - hosts:
