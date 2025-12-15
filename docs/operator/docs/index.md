@@ -5,6 +5,13 @@ The code and chart is avalible at [github.com](https://github.com/callmewhatuwan
 
 ## Getting started
 
+* create crd ressource
+* crd has to be applied before using helm to install
+
+```bash 
+kubectl apply -f https://raw.githubusercontent.com/callmewhatuwant/age-secret-operator/refs/heads/main/config/crd/bases/security.age.io_agesecrets.yaml
+```
+
 * install
 
 ```bash
@@ -54,13 +61,6 @@ echo test123 > secret.txt
 
 ```bash
 age --armor -r age1u4dtwstnutaytrfjea9jp3v9y0a8l9hh7rlgmehz9w63z0u3zuvquxhhhy secret.txt
-```
-
-* create crd ressource
-* crd has to be applied before doing that
-
-```bash
-kubectl apply -f kubectl apply -f https://raw.githubusercontent.com/callmewhatuwant/age-secret-operator/main/config/crd/bases/security.age.io_agesecret.yaml
 ```
 
 * exmaple secret crd ressource
