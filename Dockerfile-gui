@@ -1,4 +1,4 @@
-FROM alpine:3.22.2 AS builder
+FROM alpine:3.23.0 AS builder
 
 # Build-Tools installieren
 RUN apk add --no-cache \
