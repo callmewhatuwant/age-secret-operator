@@ -124,8 +124,12 @@ ageSecretController:
       capabilities:
         drop:
         - ALL
+      seccompProfile:
+        type: "RuntimeDefault"
       runAsNonRoot: true
+      privileged: false
       runAsUser: 65532
+      runAsGroup: 65532
 
 ## prometheus
 metricsService:
@@ -175,7 +179,7 @@ ageGui:
     requests:
       cpu: 100m
       memory: 64Mi
-
+    
   # strategy for updating
   strategy:
     type: RollingUpdate
@@ -183,14 +187,18 @@ ageGui:
       maxSurge: "25%"
       maxUnavailable: "25%"
 
-  # sec context
+  #sec context
   containerSecurityContext:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
         - ALL
+    seccompProfile:
+      type: "RuntimeDefault"
     runAsNonRoot: true
+    privileged: false
     runAsUser: 101
+    runAsGroup: 101
 
   # service for gui
   service:
@@ -206,7 +214,7 @@ ageGui:
     enabled: false
     host: age-gui.local
     ingressClassName: nginx
-    annotations: []
+    annotations: {}
     tls: []
       # - hosts:
       #     - age-gui.local
