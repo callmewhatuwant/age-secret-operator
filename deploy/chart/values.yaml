@@ -113,3 +113,8 @@ ageGui:
   ingress:
     enabled: false
     host: age-gui.local
+    annotations: []
+    tls:
+      - hosts:
+          - age-gui.local
+        secretName: age-gui-tls

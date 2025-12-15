@@ -61,18 +61,26 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: age-gui
-  {{- include "age-secrets.labels" . | nindent 4 }}
+    {{- include "age-secrets.labels" . | nindent 4 }}
+  {{- with .Values.ageGui.ingress.annotations }}
+  annotations:
+    {{- . | toYaml |nindent 4 }}
+  {{- end }}
 spec:
   ingressClassName: nginx
   rules:
     - host: {{ .Values.ageGui.ingress.host }}
       http:
         paths:
-          - backend:
+          - path: /
+            pathType: Prefix
+            backend:
               service:
                 name: {{ include "age-secrets.fullname" . }}-gui
                 port:
                   number: 8080
-            path: /
-            pathType: Prefix
+  {{- with .Values.ageGui.ingress.tls }}
+  tls:
+    {{- . | toYaml | nindent 4 }}
+  {{- end }}
 {{- end }}
