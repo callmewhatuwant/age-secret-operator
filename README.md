@@ -35,7 +35,7 @@ with these keys.
  * service monitor is enabled crd is needed for that
 
 ```sh
-https://raw.githubusercontent.com/callmewhatuwant/age-secret-operator/main/deploy/manifests/deploy.yaml
+https://raw.githubusercontent.com/callmewhatuwant/age-secret-operator/refs/heads/main/deploy/manifests/deploy.yaml
 ```
 ## To Deploy on the cluster with makefile
 
