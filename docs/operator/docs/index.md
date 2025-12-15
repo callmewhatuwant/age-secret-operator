@@ -69,6 +69,7 @@ apiVersion: security.age.io/v1alpha1
 kind: AgeSecret
 metadata:
   name: db-passwd
+  namespace:
 spec:
   encryptedData:
     password: |
@@ -79,6 +80,9 @@ spec:
       cWZpL09JTnFCVFFZbXRFQUY2QTdTbm8KdkZOvCXRqENpCw9ncrVP+qzDBTKwntfi
       ihgfMGuoy3Q37Dkqsw==
       -----END AGE ENCRYPTED FILE-----
+  # recipients:
+  # define public key used as value if u want
+  #   - string
 ```
 
 * verify
