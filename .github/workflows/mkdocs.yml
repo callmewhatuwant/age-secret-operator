@@ -22,6 +22,11 @@ jobs:
 
     - name: Fetch docs branch
       run: git fetch origin docs:docs || true
+
+    - name: Configure git identity
+      run: |
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       
     - name: MkDocs build and push
       run: |
