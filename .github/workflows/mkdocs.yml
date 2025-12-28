@@ -23,7 +23,7 @@ jobs:
       with:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-    - name: Fetch docs branch
+    - name: set git user
       run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
