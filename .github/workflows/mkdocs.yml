@@ -36,7 +36,8 @@ jobs:
       run: |
         mike deploy 0.0.1 latest \
           --branch docs \
-          --config-file docs/operator/mkdocs.yml
+          --config-file docs/operator/mkdocs.yml \
+          --allow-empty
         mike set-default latest \
           --branch docs \
           --config-file docs/operator/mkdocs.yml
