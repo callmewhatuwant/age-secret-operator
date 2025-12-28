@@ -37,15 +37,3 @@ jobs:
         mike set-default latest \
           --branch docs \
           --config-file docs/operator/mkdocs.yml
-
-    - name: Git add all
-      run: |
-        git add -A
-        git commit -m "add new docs"
-        git status
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
