@@ -8,9 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     #if: contains(github.event.head_commit.message, 'docs-build')
     steps:
+    
     - uses: actions/setup-python@v6.1.0
       with:
         python-version: 3.13.0
+        
+    - name: MkDocs dependencies
+      run: |
+        pip install mkdocs-material mike
+        
     - uses: actions/checkout@v6.0.1
       with:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
@@ -18,6 +24,7 @@ jobs:
       uses: iSOLveIT/mkdocs-notes@main
       with:
         config_file_path: ./docs/operator/mkdocs.yml
+        
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
