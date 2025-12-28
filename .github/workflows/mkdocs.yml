@@ -37,15 +37,7 @@ jobs:
         mike deploy 0.0.1 latest --branch docs --allow-empty --config-file docs/operator/mkdocs.yml
         mike set-default latest --config-file docs/operator/mkdocs.yml
 
-    - name: git add
+    - name: Push docs
       run: |
         git checkout docs
-        git add -A
-        git status
-        git commit -m "add new docs"
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
+        git push origin docs
