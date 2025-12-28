@@ -32,3 +32,9 @@ jobs:
       run: |
         mike deploy 0.0.1 latest --branch docs --config-file docs/operator/mkdocs.yml
         mike set-default 0.0.1 --config-file docs/operator/mkdocs.yml
+
+    - name: Configure git identity
+      run: |
+        git add -A
+        git commit -m "add docs"
+        git push
