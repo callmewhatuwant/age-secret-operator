@@ -24,7 +24,7 @@ jobs:
       uses: iSOLveIT/mkdocs-notes@main
       with:
         config_file_path: ./docs/operator/mkdocs.yml
-        mkdocs_version: 'latest' 
+        mkdocs_version: '1.6.1' 
         
     - name: Push changes
       uses: ad-m/github-push-action@master
