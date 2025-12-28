@@ -15,7 +15,6 @@ jobs:
       with:
         python-version: 3.13.0
         cache: pip
-        cache-dependency-path: requirements.txt
         
     - name: MkDocs dependencies
       run: |
