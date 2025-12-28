@@ -24,9 +24,8 @@ jobs:
       run: |
         pwd
         ls -l
-        cd docs/operator
         
     - name: MkDocs build and push
       run: |
-        mike set-default 0.0.1
-        mike deploy 0.0.1 latest --branch docs
+        mike set-default 0.0.1 --config-file docs/operator/mkdocs.yml
+        mike deploy 0.0.1 latest --branch docs --config-file docs/operator/mkdocs.yml
