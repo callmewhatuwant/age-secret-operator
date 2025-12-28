@@ -39,6 +39,7 @@ jobs:
 
     - name: git add
       run: |
+        git checkout docs
         git add -A
         git status
         git commit -m "add new docs"
