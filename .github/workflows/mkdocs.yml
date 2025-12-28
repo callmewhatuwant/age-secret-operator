@@ -21,17 +21,19 @@ jobs:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
     - name: Fetch docs branch
-      run: git fetch origin docs:docs || true
-
-    - name: Configure git identity
       run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git fetch origin docs:docs || true
       
     - name: MkDocs build and push
       run: |
         mike deploy 0.0.1 latest --branch docs --config-file docs/operator/mkdocs.yml
         mike set-default 0.0.1 --config-file docs/operator/mkdocs.yml
+
+    - name: Git add all
+      run: |
+        git commit -a -m "add new docs"
 
     - name: Push changes
       uses: ad-m/github-push-action@master
