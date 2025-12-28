@@ -34,19 +34,14 @@ jobs:
       
     - name: Build & deploy docs
       run: |
-        mike deploy 0.0.1 latest \
-          --branch docs \
-          --config-file docs/operator/mkdocs.yml \
-          --allow-empty
-        mike set-default latest \
-          --branch docs \
-          --config-file docs/operator/mkdocs.yml
+        mike deploy 0.0.1 latest --branch docs --allow-empty --config-file docs/operator/mkdocs.yml
+        mike set-default latest --config-file docs/operator/mkdocs.yml
 
     - name: git add
       run: |
         git add -A
-        git commit -m "add new docs"
         git status
+        git commit -m "add new docs"
 
     - name: Push changes
       uses: ad-m/github-push-action@master
