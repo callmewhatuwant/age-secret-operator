@@ -40,7 +40,8 @@ jobs:
 
     - name: Git add all
       run: |
-        git commit -a -m "add new docs"
+        git add -A
+        git commit -m "add new docs"
         git status
 
     - name: Push changes
