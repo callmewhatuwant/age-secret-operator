@@ -117,7 +117,7 @@ ageSecretController:
     ## image
     image:
       repository: callmewhatuwant/age-secrets-operator
-      tag: 0.0.10
+      tag: 0.0.1
     imagePullPolicy: IfNotPresent
 
     ## resources
@@ -169,7 +169,7 @@ ageKeyRotation:
   ## image for cron and init job
   image:
     repository: callmewhatuwant/age-job
-    tag: "3.22.2-1"
+    tag: "3.23.0"
     pullPolicy: IfNotPresent
 
 ## gui
@@ -180,7 +180,7 @@ ageGui:
   # image for gui
   image:
     repository: callmewhatuwant/age-gui
-    tag: "alpine3.22-perl-1"
+    tag: "alpine3.22-perl"
     pullPolicy: IfNotPresent
 
   resources:
