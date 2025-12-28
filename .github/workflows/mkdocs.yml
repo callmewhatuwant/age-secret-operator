@@ -41,8 +41,6 @@ jobs:
           --branch docs \
           --config-file docs/operator/mkdocs.yml
 
-        - name: Git add all
-
     - name: git add
       run: |
         git add -A
