@@ -24,12 +24,19 @@ jobs:
       run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+    - name: Fetch docs branch
+      run: |
         git fetch origin docs:docs || true
       
-    - name: MkDocs build and push
+    - name: Build & deploy docs
       run: |
-        mike deploy 0.0.1 latest --branch docs --config-file docs/operator/mkdocs.yml
-        mike set-default 0.0.1 --config-file docs/operator/mkdocs.yml
+        mike deploy 0.0.1 latest \
+          --branch docs \
+          --config-file docs/operator/mkdocs.yml
+        mike set-default latest \
+          --branch docs \
+          --config-file docs/operator/mkdocs.yml
 
     - name: Git add all
       run: |
