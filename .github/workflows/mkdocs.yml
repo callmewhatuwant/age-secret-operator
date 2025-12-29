@@ -44,7 +44,22 @@ jobs:
       run: |
         mike deploy ${{ github.event.inputs.version_new }} ${{ github.event.inputs.version_latest }} --branch docs --allow-empty --config-file pages/operator/mkdocs.yml
         mike set-default 0.0.1 --branch docs --config-file pages/operator/mkdocs.yml
-           
+
+    - name: Commit changes on main if any
+      run: |
+        if [[ -n "$(git status --porcelain)" ]]; then
+          git add .
+          git commit -m "update generated files"
+        else
+          echo "No changes on main, skipping commit"
+        fi
+
+    - name: Push main
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+        
     - name: checkout docs
       run: |
         git checkout docs
