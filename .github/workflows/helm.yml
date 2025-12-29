@@ -1,32 +1,24 @@
 name: Release Charts
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  release:
-    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
-    # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
-    permissions:
-      contents: write
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v6.0.1
 
-      - name: Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.7.0
+      - name: Publish Helm chart to docs branch
+        uses: stefanprodan/helm-gh-pages@master
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           charts_dir: deploy
-          pages_branch: docs
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          charts_url: https://<USER>.github.io/<REPO>/docs
+          owner: ${{ github.repository_owner }}
+          repository: ${{ github.event.repository.name }}
+          branch: docs
+          target_dir: docs
+          index_dir: docs
+          commit_username: github-actions
+          commit_email: github-actions@github.com
