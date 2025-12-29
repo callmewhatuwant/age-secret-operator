@@ -15,7 +15,7 @@ jobs:
       - name: Setup Helm
         uses: azure/setup-helm@v4
         with:
-          version: v4.0.4
+          version: v4.3.1
 
       - name: Package chart
         run: |
