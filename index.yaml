@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  age-secrets:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2025-12-29T00:31:28.798190167Z"
+    description: A Helm chart for Kubernetes
+    digest: 37f677d82dd6015b9997fe5c664949c69d4edb68a0e033f37a59a38f397bc997
+    name: age-secrets
+    type: application
+    urls:
+    - https://github.com/callmewhatuwant/age-secret-operator/releases/download/age-secrets-0.0.1/age-secrets-0.0.1.tgz
+    version: 0.0.1
+generated: "2025-12-29T00:31:28.79819689Z"
