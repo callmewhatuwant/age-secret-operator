@@ -44,6 +44,12 @@ jobs:
       run: |
         mike deploy ${{ github.event.inputs.version_new }} ${{ github.event.inputs.version_latest }} --branch docs --allow-empty --config-file pages/operator/mkdocs.yml
         mike set-default 0.0.1 --config-file pages/operator/mkdocs.yml
+
+    - name: Push docs main
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
            
     - name: checkout docs
       run: |
