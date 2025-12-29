@@ -20,5 +20,6 @@ jobs:
           branch: docs
           target_dir: docs
           index_dir: docs
-          commit_username: github-actions
-          commit_email: github-actions@github.com
+          commit_username: ${GITHUB_ACTOR}
+          commit_email: "${GITHUB_ACTOR}@users.noreply.github.com"
+          helm_version: 4.0.4
