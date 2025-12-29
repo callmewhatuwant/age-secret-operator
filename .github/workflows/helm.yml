@@ -7,19 +7,43 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+    
       - uses: actions/checkout@v6.0.1
-
-      - name: Publish Helm chart to docs branch
-        uses: stefanprodan/helm-gh-pages@master
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          charts_dir: deploy
-          charts_url: https://age-secrets.com
-          owner: ${{ github.repository_owner }}
-          repository: ${{ github.event.repository.name }}
-          branch: docs
-          target_dir: docs
-          index_dir: docs
-          commit_username: ${GITHUB_ACTOR}
-          commit_email: "${GITHUB_ACTOR}@users.noreply.github.com"
-          helm_version: 4.0.4
+          fetch-depth: 0
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v4.0.4
+
+      - name: Package chart
+        run: |
+          mkdir -p /tmp/.chart
+          helm lint deploy/chart
+          helm package deploy/chart --destination /tmp/.chart
+  
+      - name: set git user
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+  
+      - name: Fetch docs branch
+        run: |
+          git fetch origin docs:docs || true
+          git checkout docs
+
+      - name: Copy chart to docs
+        run: |
+          cp /tmp/.chart/*.tgz docs
+
+      - name: Update Helm index
+        run: |
+          helm repo index docs \
+          --url https://age-secrets.com
+
+      - name: Commit & push
+        run: |
+          git add -A
+          git commit -m "Publish Helm chart" || true
+          git push origin docs
