@@ -13,9 +13,9 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Helm
-        uses: azure/setup-helm@v4
+        uses: azure/setup-helm@v4.3.1
         with:
-          version: v4.3.1
+          version: v4.0.4
 
       - name: Package chart
         run: |
