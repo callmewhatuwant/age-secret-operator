@@ -43,7 +43,7 @@ jobs:
     - name: Build & deploy docs
       run: |
         mike deploy ${{ github.event.inputs.version_new }} ${{ github.event.inputs.version_latest }} --branch docs --allow-empty --config-file pages/operator/mkdocs.yml
-        mike set-default 0.0.1  --branch docs --config-file pages/operator/mkdocs.yml
+        mike set-default 0.0.1 --branch docs --config-file pages/operator/mkdocs.yml
            
     - name: checkout docs
       run: |
