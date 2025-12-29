@@ -1,11 +1,16 @@
 name: MkDocs Deploy
 on:
   workflow_dispatch:
-    #branches:
-      #- main
-permissions:
-  contents: write
-  
+    inputs:
+      version_new: 
+        description: 'new version'
+        required: true
+        default: '0.0.1'
+      version_latest: 
+        description: 'latest version'
+        required: true
+        default: 'latest'
+   
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,7 +42,7 @@ jobs:
       
     - name: Build & deploy docs
       run: |
-        mike deploy 0.0.1 latest --branch docs --allow-empty --config-file docs/operator/mkdocs.yml
+        mike deploy ${{ github.event.inputs.version_new }} ${{ github.event.inputs.version_latest }} --branch docs --allow-empty --config-file docs/operator/mkdocs.yml
         mike set-default 0.0.1 --config-file docs/operator/mkdocs.yml
            
     - name: checkout docs
