@@ -52,7 +52,7 @@ func main() {
 	flag.BoolVar(&enableLeaderElection, "leader-elect", false, "Enable leader election for controller manager.")
 	flag.StringVar(&leaderNS, "leader-election-namespace", "",
 		"Namespace for the leader election Lease (defaults to POD_NAMESPACE or age-system).")
-	flag.StringVar(&keyNS, "key-namespace", "age-system", "Namespace containing AGE key Secrets.")
+	flag.StringVar(&keyNS, "key-namespace", "age-secrets", "Namespace containing AGE key Secrets.")
 	flag.StringVar(&keyLabelKey, "key-label-key", "app", "Label key for AGE key Secrets.")
 	flag.StringVar(&keyLabelVal, "key-label-val", "age-key", "Label value for AGE key Secrets.")
 
@@ -88,12 +88,13 @@ func main() {
 		setupLog.Error(err, "unable to start manager")
 		os.Exit(1)
 	}
+	split := strings.Split(keyNS, ",")
+	namespaces := append([]string{"age-secrets"}, split...)
 
 	if err := (&controller.AgeSecretReconciler{
 		Client:       mgr.GetClient(),
 		Scheme:       mgr.GetScheme(),
-		//KeyNamespace: strings.Split(keyNS, age-secrets, ","),
-		KeyNamespace: append(strings.Split(keyNS, ","), "age-secrets"),
+		KeyNamespace: namespaces,
 		KeyLabelKey:  keyLabelKey,
 		KeyLabelVal:  keyLabelVal,
 	}).SetupWithManager(mgr); err != nil {

@@ -6,6 +6,7 @@ ageSecretController:
   leaderElection:
     enabled: true
     namespace: age-system
+  #keyNamespaces: ""
 
   ## replicas for ha
   replicas: 3
@@ -58,7 +59,9 @@ ServiceMonitor:
 ## job
 ageKeyRotation:
   schedule: "0 0 1 * *"
-
+  namespaces:
+    - test
+    - age-secrets
   ## initial key
   initialRun:
     enabled: true

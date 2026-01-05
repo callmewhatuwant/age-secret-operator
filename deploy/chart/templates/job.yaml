@@ -1,11 +1,12 @@
-{{- if and (.Values.ageKeyRotation.initialRun.enabled | default true) .Release.IsInstall }}
+{{- range $ns := .Values.ageKeyRotation.namespaces }}
+{{- if and ($.Values.ageKeyRotation.initialRun.enabled | default true) $.Release.IsInstall }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "age-secrets.fullname" . }}-age-key-rotation-init
-  namespace: {{ .Release.Namespace }}
+  name: {{ include "age-secrets.fullname" $ }}-age-key-rotation-init
+  namespace: {{ $ns }}  
   labels:
-    {{- $base := (include "age-secrets.labels" . | fromYaml) }}
+    {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
     {{- range $k, $v := $base }}
     {{ $k }}: "{{ $v }}-job"
     {{- end }}    
@@ -14,80 +15,94 @@ spec:
   template:
     metadata:
       labels:
-        {{- $base := (include "age-secrets.labels" . | fromYaml) }}
+        {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
         {{- range $k, $v := $base }}
         {{ $k }}: "{{ $v }}-job"
         {{- end }}
     spec:
-      serviceAccountName: {{ include "age-secrets.fullname" . }}-job
+      serviceAccountName: {{ include "age-secrets.fullname" $ }}-job
       restartPolicy: OnFailure
       containers:
         - name: gen-age-key
-          image: "{{ .Values.ageKeyRotation.image.repository }}:{{ .Values.ageKeyRotation.image.tag }}"
-          imagePullPolicy: {{ .Values.ageKeyRotation.image.pullPolicy | default "IfNotPresent" }}
-          command: ["/bin/sh","-c"]
+          image: "{{ $.Values.ageKeyRotation.image.repository }}:{{ $.Values.ageKeyRotation.image.tag }}"
+          imagePullPolicy: {{ $.Values.ageKeyRotation.image.pullPolicy | default "IfNotPresent" }}  
+          command: ["/bin/sh","-c"] 
           args:
             - |
               set -euo pipefail
 
-              # Install required tools
-              # apk add --no-cache kubectl age
-
-              NS="{{ .Release.Namespace }}"
+              NS="{{ $ns }}"
               DATE="$(date +%Y-%m-%d-%H-%M)"
               NAME="age-key-${DATE}"
 
-              echo "Creating initial age key: $NAME"
-
+              # Skip if Secret already exists
               if kubectl -n "$NS" get secret "$NAME" >/dev/null 2>&1; then
                 echo "Secret $NAME already exists – skipping."
                 exit 0
               fi
 
+              # Generate private/public key pair and clean comments
               age-keygen -o /tmp/key.txt
               sed -i '/^#/d' /tmp/key.txt
               PUB="$(age-keygen -y < /tmp/key.txt | grep -v '^#')"
 
+              # Create Secret
               kubectl -n "$NS" create secret generic "$NAME" \
                 --from-file=private=/tmp/key.txt \
                 --from-literal=public="$PUB"
 
+              # Label and annotate
               kubectl -n "$NS" annotate secret "$NAME" active="true" --overwrite
               kubectl -n "$NS" label secret "$NAME" app=age-key --overwrite
-{{- end }}
+
 ---
+{{- end }}
+{{- end }}
+
+---
+{{ range $ns := .Values.ageKeyRotation.namespaces }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: {{ include "age-secrets.fullname" . }}-job
-  namespace: {{ .Release.Namespace }}
+  name: {{ include "age-secrets.fullname" $ }}-job
+  namespace: {{ $ns }}
   labels:
-  {{- include "age-secrets.labels" . | nindent 4 }}
+  {{- include "age-secrets.labels" $ | nindent 4 }}
 ---
+{{- end }}
+---
+{{- range $ns := .Values.ageKeyRotation.namespaces }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ include "age-secrets.fullname" . }}-job
-  namespace: {{ .Release.Namespace }}
+  name: {{ include "age-secrets.fullname" $ }}-job
+  namespace: {{ $ns }}
   labels:
-    {{- include "age-secrets.labels" . | nindent 4 }}
+    {{- include "age-secrets.labels" $ | nindent 4 }}
 rules:
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get","list","create","update","patch"]
 ---
+{{- end }}
+
+---
+{{- range $ns := .Values.ageKeyRotation.namespaces }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ include "age-secrets.fullname" . }}-job
-  namespace: {{ .Release.Namespace }}
+  name: {{ include "age-secrets.fullname" $ }}-job
+  namespace: {{ $ns }}
   labels:
-    {{- include "age-secrets.labels" . | nindent 4 }}
+    {{- include "age-secrets.labels" $ | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ include "age-secrets.fullname" . }}-job
+  name: {{ include "age-secrets.fullname" $ }}-job
 subjects:
   - kind: ServiceAccount
-    name: {{ include "age-secrets.fullname" . }}-job
-    namespace: {{ .Release.Namespace }}
+    name: {{ include "age-secrets.fullname" $ }}-job
+    namespace: {{ $ns }}
+---
+{{- end }}
+

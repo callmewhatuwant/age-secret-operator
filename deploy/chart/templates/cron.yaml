@@ -1,15 +1,16 @@
+{{- range $ns := .Values.ageKeyRotation.namespaces }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "age-secrets.fullname" . }}-age-key-rotation
-  namespace: {{ .Release.Namespace }}
+  name: {{ include "age-secrets.fullname" $ }}-age-key-rotation
+  namespace: {{ $ns }}
   labels:
-    {{- $base := (include "age-secrets.labels" . | fromYaml) }}
+    {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
     {{- range $k, $v := $base }}
     {{ $k }}: "{{ $v }}-job"
     {{- end }}
 spec:
-  schedule: {{ .Values.ageKeyRotation.schedule | quote }}
+  schedule: {{ $.Values.ageKeyRotation.schedule | quote }}
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -17,26 +18,23 @@ spec:
       template:
         metadata:
           labels:
-            {{- $base := (include "age-secrets.labels" . | fromYaml) }}
+            {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
             {{- range $k, $v := $base }}
             {{ $k }}: "{{ $v }}-job"
             {{- end }}
         spec:
-          serviceAccountName: {{ include "age-secrets.fullname" . }}-job
+          serviceAccountName: {{ include "age-secrets.fullname" $ }}-job
           restartPolicy: OnFailure
           containers:
             - name: gen-age-key
-              image: "{{ .Values.ageKeyRotation.image.repository }}:{{ .Values.ageKeyRotation.image.tag }}"
-              imagePullPolicy: {{ .Values.ageKeyRotation.image.pullPolicy | default "IfNotPresent" }}
-              command: ["/bin/sh","-c"]
+              image: "{{ $.Values.ageKeyRotation.image.repository }}:{{ $.Values.ageKeyRotation.image.tag }}"
+              imagePullPolicy: {{ $.Values.ageKeyRotation.image.pullPolicy | default "IfNotPresent" }}
+              command: ["/bin/sh", "-c"]
               args:
                 - |
                   set -euo pipefail
 
-                  # Install required tools
-                  # apk add --no-cache kubectl age
-
-                  NS="{{ .Release.Namespace }}"
+                  NS="{{ $ns }}"
                   DATE="$(date +%Y-%m-%d-%H-%M)"
                   NAME="age-key-${DATE}"
 
@@ -59,3 +57,6 @@ spec:
                   # Label and annotate
                   kubectl -n "$NS" annotate secret "$NAME" active="true" --overwrite
                   kubectl -n "$NS" label secret "$NAME" app=age-key --overwrite
+---
+{{- end }}
+
