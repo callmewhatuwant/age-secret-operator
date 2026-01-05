@@ -235,7 +235,6 @@ ageGui:
       # - hosts:
       #     - age-gui.local
       #   secretName: age-gui-tls
-      #
 ```
 
 ## Enhancements
