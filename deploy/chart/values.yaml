@@ -1,13 +1,17 @@
 ## name override
 fullnameOverride: age-secret-controller
+  
+## namespaces in wich new keys will be generated
+## controller will also check in them for keys to decrypt  
 keyNamespaces: "age-secrets"
+
+## controller values  
 ageSecretController:
 
 ## leader election
   leaderElection:
     enabled: true
     namespace: age-system
-  #keyNamespaces: ""
 
   ## replicas for ha
   replicas: 3

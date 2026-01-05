@@ -103,6 +103,12 @@ kubectl get secret -n test
 ```yaml
 ## name override
 fullnameOverride: age-secret-controller
+  
+## namespaces in wich new keys will be generated
+## controller will also check in them for keys to decrypt  
+keyNamespaces: "age-secrets"
+
+## controller values  
 ageSecretController:
 
 ## leader election
@@ -117,7 +123,7 @@ ageSecretController:
     ## image
     image:
       repository: callmewhatuwant/age-secrets-operator
-      tag: 0.0.1
+      tag: 0.0.10
     imagePullPolicy: IfNotPresent
 
     ## resources
@@ -161,7 +167,6 @@ ServiceMonitor:
 ## job
 ageKeyRotation:
   schedule: "0 0 1 * *"
-
   ## initial key
   initialRun:
     enabled: true
@@ -169,7 +174,7 @@ ageKeyRotation:
   ## image for cron and init job
   image:
     repository: callmewhatuwant/age-job
-    tag: "3.23.0"
+    tag: "3.22.2-1"
     pullPolicy: IfNotPresent
 
 ## gui
@@ -180,7 +185,7 @@ ageGui:
   # image for gui
   image:
     repository: callmewhatuwant/age-gui
-    tag: "alpine3.22-perl"
+    tag: "alpine3.22-perl-1"
     pullPolicy: IfNotPresent
 
   resources:
