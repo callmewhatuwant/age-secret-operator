@@ -36,9 +36,9 @@ type AgeSecretReconciler struct {
 	Scheme *runtime.Scheme
 
 	// Configurable via CLI flags (see cmd/main.go)
-	KeyNamespace string // default: "age-system"
-	KeyLabelKey  string // default: "app"
-	KeyLabelVal  string // default: "age-key"
+	KeyNamespace []string // default: "age-system, age-secrets"
+	KeyLabelKey  string   // default: "app"
+	KeyLabelVal  string   // default: "age-key"
 }
 
 // +kubebuilder:rbac:groups=security.age.io,resources=agesecrets,verbs=get;list;watch;update;patch
@@ -63,25 +63,35 @@ func (r *AgeSecretReconciler) Reconcile(ctx context.Context, req ctrl.Request) (
 			return ctrl.Result{}, nil
 		}
 	}
-
 	// 2. List available AGE key Secrets (by namespace and label).
-	keyList := &corev1.SecretList{}
-	if err := r.List(ctx, keyList,
-		client.InNamespace(r.KeyNamespace),
-		client.MatchingLabels{r.KeyLabelKey: r.KeyLabelVal},
-	); err != nil {
-		logger.Error(err, "failed to list key secrets", "namespace", r.KeyNamespace)
-		return ctrl.Result{}, err
+	found := false
+	allKeys := []corev1.Secret{}
+
+	for _, ns := range r.KeyNamespace {
+		keyList := &corev1.SecretList{}
+		if err := r.List(ctx, keyList,
+			client.InNamespace(ns),
+			client.MatchingLabels{r.KeyLabelKey: r.KeyLabelVal},
+		); err != nil {
+			logger.Error(err, "failed to list key secrets", "namespace", ns)
+			return ctrl.Result{}, err
+		}
+
+		if len(keyList.Items) > 0 {
+			found = true
+			allKeys = append(allKeys, keyList.Items...)
+		}
 	}
-	if len(keyList.Items) == 0 {
+
+	if !found {
 		logger.Info("no AGE keys found, will retry", "namespace", r.KeyNamespace)
 		return ctrl.Result{RequeueAfter: 30 * time.Second}, nil
 	}
 
-	// 3. Decrypt each field in spec.encryptedData.
+	// 3. Decrypt each field in spec.encryptedData using allKeys
 	plain := map[string][]byte{}
 	for field, enc := range cr.Spec.EncryptedData {
-		b, keyUsed, derr := decryptWithAge(ctx, enc, keyList.Items, cr.Spec.Recipients)
+		b, keyUsed, derr := decryptWithAge(ctx, enc, allKeys, cr.Spec.Recipients)
 		if derr != nil {
 			logger.Error(derr, "failed to decrypt", "field", field)
 			return ctrl.Result{}, fmt.Errorf("decrypt %s: %w", field, derr)

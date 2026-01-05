@@ -9,6 +9,7 @@ package main
 import (
 	"flag"
 	"os"
+	"strings"
 
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
@@ -91,7 +92,8 @@ func main() {
 	if err := (&controller.AgeSecretReconciler{
 		Client:       mgr.GetClient(),
 		Scheme:       mgr.GetScheme(),
-		KeyNamespace: keyNS,
+		//KeyNamespace: strings.Split(keyNS, age-secrets, ","),
+		KeyNamespace: append(strings.Split(keyNS, ","), "age-secrets"),
 		KeyLabelKey:  keyLabelKey,
 		KeyLabelVal:  keyLabelVal,
 	}).SetupWithManager(mgr); err != nil {
