@@ -73,10 +73,9 @@ metadata:
 ---
 {{- range $ns := .Values.ageKeyRotation.namespaces }}
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
   name: {{ include "age-secrets.fullname" $ }}-job
-  namespace: {{ $ns }}
   labels:
     {{- include "age-secrets.labels" $ | nindent 4 }}
 rules:
@@ -97,7 +96,7 @@ metadata:
     {{- include "age-secrets.labels" $ | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: {{ include "age-secrets.fullname" $ }}-job
 subjects:
   - kind: ServiceAccount
