@@ -1,5 +1,16 @@
-{{- range $ns := .Values.ageKeyRotation.namespaces }}
-{{- if and ($.Values.ageKeyRotation.initialRun.enabled | default true) $.Release.IsInstall }}
+{{- $raw := $.Values.keyNamespaces }}
+{{- $namespaces := list }}
+
+{{- if kindIs "string" $raw }}
+  {{- $namespaces = splitList "," $raw | compact }}
+{{- else if kindIs "slice" $raw }}
+  {{- $namespaces = $raw }}
+{{- else }}
+  {{- fail "keyNamespaces must be string or comma-separated string" }}
+{{- end }}
+
+{{- range $ns := $namespaces }}
+
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -57,10 +68,9 @@ spec:
 
 ---
 {{- end }}
-{{- end }}
 
 ---
-{{ range $ns := .Values.ageKeyRotation.namespaces }}
+{{- range $ns := $namespaces }}     
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -71,7 +81,7 @@ metadata:
 ---
 {{- end }}
 ---
-{{- range $ns := .Values.ageKeyRotation.namespaces }}
+{{- range $ns := $namespaces }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -86,7 +96,7 @@ rules:
 {{- end }}
 
 ---
-{{- range $ns := .Values.ageKeyRotation.namespaces }}
+{{- range $ns := $namespaces }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:

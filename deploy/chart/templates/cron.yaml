@@ -1,4 +1,16 @@
-{{- range $ns := .Values.ageKeyRotation.namespaces }}
+{{- $raw := $.Values.keyNamespaces }}
+{{- $namespaces := list }}
+
+{{- if kindIs "string" $raw }}
+  {{- $namespaces = splitList "," $raw | compact }}
+{{- else if kindIs "slice" $raw }}
+  {{- $namespaces = $raw }}
+{{- else }}
+  {{- fail "ageKeyRotation.namespaces must be string or comma-separated string" }}
+{{- end }}
+
+{{- range $ns := $namespaces }}
+
 apiVersion: batch/v1
 kind: CronJob
 metadata:

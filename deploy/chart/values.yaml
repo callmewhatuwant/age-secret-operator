@@ -1,5 +1,6 @@
 ## name override
 fullnameOverride: age-secret-controller
+keyNamespaces: "age-secrets"
 ageSecretController:
 
 ## leader election
@@ -59,7 +60,6 @@ ServiceMonitor:
 ## job
 ageKeyRotation:
   schedule: "0 0 1 * *"
-  namespaces: "age-secrets"
   ## initial key
   initialRun:
     enabled: true
