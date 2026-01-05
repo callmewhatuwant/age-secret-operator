@@ -22,7 +22,7 @@ markdown_extensions:
   - md_in_html
 plugins:
   - mike:
-      deploy_prefix: pages
+      deploy_prefix: docs
 extra:
   version:
     provider: mike
