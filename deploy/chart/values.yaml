@@ -59,9 +59,7 @@ ServiceMonitor:
 ## job
 ageKeyRotation:
   schedule: "0 0 1 * *"
-  namespaces:
-    - test
-    - age-secrets
+  namespaces: "age-secrets"
   ## initial key
   initialRun:
     enabled: true
