@@ -1,0 +1,18 @@
+{{- $raw := .Values.keyNamespaces }}
+{{- $namespaces := list }}
+
+{{- if kindIs "string" $raw }}
+  {{- $namespaces = splitList "," $raw | compact }}
+{{- else if kindIs "slice" $raw }}
+  {{- $namespaces = $raw }}
+{{- else }}
+  {{- fail "keyNamespaces must be string or comma-separated string" }}
+{{- end }}
+
+{{- range $ns := $namespaces }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ $ns }}
+---
+{{- end }}
