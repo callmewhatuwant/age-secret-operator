@@ -10,9 +10,13 @@
 {{- end }}
 
 {{- range $ns := $namespaces }}
+{{- if not (lookup "v1" "Namespace" "" $ns) }}
+
 apiVersion: v1
 kind: Namespace
 metadata:
   name: {{ $ns }}
+
 ---
+{{- end }}
 {{- end }}
