@@ -1,3 +1,5 @@
+{{- if and (.Values.ageKeyRotation.initialRun.enabled | default true) .Release.IsInstall }}
+
 {{- $raw := $.Values.keyNamespaces }}
 {{- $namespaces := list }}
 
@@ -23,15 +25,10 @@ metadata:
     {{- end }}
 
 spec:
-  selector:
-    matchLabels:
-      job-role: age-key-rotation
-
   backoffLimit: 1
   template:
     metadata:
       labels:
-        job-role: age-key-rotation
         {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
         {{- range $k, $v := $base }}
         {{ $k }}: "{{ $v }}-job"
@@ -54,7 +51,6 @@ spec:
               NAME="age-key-${DATE}"
 
               if kubectl -n "$NS" get secret "$NAME" >/dev/null 2>&1; then
-                echo "Secret $NAME already exists – skipping."
                 exit 0
               fi
 
@@ -66,10 +62,8 @@ spec:
                 --from-file=private=/tmp/key.txt \
                 --from-literal=public="$PUB"
 
-              kubectl -n "$NS" annotate secret "$NAME" active="true" --overwrite
-              kubectl -n "$NS" label secret "$NAME" app=age-key --overwrite
-
 ---
+{{- end }}
 {{- end }}
 
 {{- range $ns := $namespaces }}
