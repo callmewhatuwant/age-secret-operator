@@ -15,6 +15,9 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ include "age-secrets.fullname" $ }}-age-key-rotation-init
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
   namespace: {{ $ns }}  
   labels:
     {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
