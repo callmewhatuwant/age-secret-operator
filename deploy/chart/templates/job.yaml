@@ -1,5 +1,3 @@
-{{- if and (.Values.ageKeyRotation.initialRun.enabled | default true) .Release.IsInstall }}
-
 {{- $raw := $.Values.keyNamespaces }}
 {{- $namespaces := list }}
 
@@ -10,6 +8,8 @@
 {{- else }}
   {{- fail "keyNamespaces must be string or comma-separated string" }}
 {{- end }}
+
+{{- if and (.Values.ageKeyRotation.initialRun.enabled | default true) .Release.IsInstall }}
 
 {{- range $ns := $namespaces }}
 
@@ -40,12 +40,10 @@ spec:
       containers:
         - name: gen-age-key
           image: "{{ $.Values.ageKeyRotation.image.repository }}:{{ $.Values.ageKeyRotation.image.tag }}"
-          imagePullPolicy: {{ $.Values.ageKeyRotation.image.pullPolicy | default "IfNotPresent" }}
           command: ["/bin/sh","-c"]
           args:
             - |
               set -euo pipefail
-
               NS="{{ $ns }}"
               DATE="$(date +%Y-%m-%d-%H-%M)"
               NAME="age-key-${DATE}"
