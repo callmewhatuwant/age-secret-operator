@@ -25,15 +25,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
-      {{- range $k, $v := $base }}
-      {{ $k }}: "{{ $v }}-job"
-      {{- end }}
+      job-role: age-key-rotation
 
   backoffLimit: 1
   template:
     metadata:
       labels:
+        job-role: age-key-rotation
         {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
         {{- range $k, $v := $base }}
         {{ $k }}: "{{ $v }}-job"
