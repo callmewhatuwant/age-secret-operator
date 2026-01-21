@@ -54,6 +54,7 @@ func init() {
 func main() {
 	var (
 		metricsAddr          string
+		secureMetrics 		 bool
 		probeAddr            string
 		enableLeaderElection bool
 		leaderNS             string
@@ -62,7 +63,8 @@ func main() {
 		keyNS, keyLabelKey, keyLabelVal string
 	)
 
-	flag.StringVar(&metricsAddr, "metrics-bind-address", ":8080", "The address the metrics endpoint binds to.")
+	flag.StringVar(&metricsAddr, "metrics-bind-address", ":8443", "Metrics bind address.")
+	flag.BoolVar(&secureMetrics, "metrics-secure", true, "Serve metrics over HTTPS.")
 	flag.StringVar(&probeAddr, "health-probe-bind-address", ":8081", "The address the probe endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "leader-elect", false, "Enable leader election for controller manager.")
 	flag.StringVar(&leaderNS, "leader-election-namespace", "",
@@ -87,10 +89,19 @@ func main() {
 
 	ctrl.SetLogger(zap.New(zap.UseFlagOptions(&opts)))
 
+	metricsOpts := metricsserver.Options{
+    BindAddress:   metricsAddr,
+    SecureServing: secureMetrics,
+	}
+
+	if secureMetrics {
+	    metricsOpts.FilterProvider =
+	        filters.WithAuthenticationAndAuthorization
+	}
+
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
-		Scheme: scheme,
-		Metrics: metricsserver.Options{
-			BindAddress: metricsAddr,
+	    Scheme:  scheme,
+	    Metrics: metricsOpts,			
 		},
 		HealthProbeBindAddress: probeAddr,
 
