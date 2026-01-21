@@ -56,6 +56,7 @@ func init() {
 func main() {
 	var (
 		metricsAddr          string
+		metricsCertPath, metricsCertName, metricsCertKey string
 		secureMetrics        bool
 		enableHTTP2 		 bool
 		probeAddr            string
