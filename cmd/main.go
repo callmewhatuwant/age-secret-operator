@@ -20,7 +20,9 @@ import (
 	"flag"
 	"os"
 	"strings"
-
+	
+	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
+	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
 	"k8s.io/apimachinery/pkg/runtime"
@@ -34,6 +36,7 @@ import (
 
 	securityv1alpha1 "github.com/callmewhatuwant/age-secret-operator/api/v1alpha1"
 	"github.com/callmewhatuwant/age-secret-operator/internal/controller"
+	// +kubebuilder:scaffold:imports
 )
 
 var (
@@ -44,8 +47,10 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 	utilruntime.Must(securityv1alpha1.AddToScheme(scheme))
+	// +kubebuilder:scaffold:scheme
 }
 
+// nolint:gocyclo
 func main() {
 	var (
 		metricsAddr          string
@@ -53,7 +58,7 @@ func main() {
 		enableLeaderElection bool
 		leaderNS             string
 
-		// key Secret Discovery
+		// key secret discovery
 		keyNS, keyLabelKey, keyLabelVal string
 	)
 
@@ -71,7 +76,7 @@ func main() {
 	flag.Parse()
 
 	// Resolve leader election namespace:
-	// 1) explicit flag > 2) POD_NAMESPACE > 3) age-system
+	// explicit flag > POD_NAMESPACE > age-system
 	if leaderNS == "" {
 		if podNS := os.Getenv("POD_NAMESPACE"); podNS != "" {
 			leaderNS = podNS
@@ -89,7 +94,7 @@ func main() {
 		},
 		HealthProbeBindAddress: probeAddr,
 
-		// 🔒 Leader Election (Lease in coordination.k8s.io)
+		// Leader Election (Lease in coordination.k8s.io)
 		LeaderElection:          enableLeaderElection,
 		LeaderElectionID:        "age-secret-operator.age.io",
 		LeaderElectionNamespace: leaderNS,
