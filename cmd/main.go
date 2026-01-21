@@ -57,6 +57,7 @@ func main() {
 	var (
 		metricsAddr          string
 		secureMetrics        bool
+		enableHTTP2 		 bool
 		probeAddr            string
 		enableLeaderElection bool
 		leaderNS             string
