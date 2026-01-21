@@ -118,7 +118,6 @@ func main() {
 		}
 	}
 	
-
 	// if the enable-http2 flag is false (the default), http/2 should be disabled
 	// due to its vulnerabilities. More specifically, disabling http/2 will
 	// prevent from being vulnerable to the HTTP/2 Stream Cancellation and
@@ -171,7 +170,6 @@ func main() {
 	//
 	// webhookServer := webhook.NewServer(webhookServerOptions)
 
-	
 	metricsServerOptions := metricsserver.Options{
 		BindAddress:   metricsAddr,
 		SecureServing: secureMetrics,
@@ -245,10 +243,10 @@ func main() {
 	
 	// nolint:goconst
 	// if os.Getenv("ENABLE_WEBHOOKS") != "false" {
-		// if err := webhookv1alpha1.SetupServiceLevelObjectiveWebhookWithManager(mgr); err != nil {
-			// setupLog.Error(err, "unable to create webhook", "webhook", "ServiceLevelObjective")
-			// os.Exit(1)
-		// }
+	//     if err := webhookv1alpha1.SetupServiceLevelObjectiveWebhookWithManager(mgr); err != nil {
+	//         setupLog.Error(err, "unable to create webhook", "webhook", "ServiceLevelObjective")
+	//         os.Exit(1)
+	//     }
 	// }
 	// +kubebuilder:scaffold:builder
 
