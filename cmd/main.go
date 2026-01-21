@@ -108,9 +108,10 @@ func main() {
 		tlsOpts = append(tlsOpts, disableHTTP2)
 	}
 
-	metricsOpts := metricsserver.Options{
+	metricsServerOptions := metricsserver.Options{
 		BindAddress:   metricsAddr,
 		SecureServing: secureMetrics,
+		TLSOpts:       tlsOpts,
 	}
 
 	if secureMetrics {
@@ -140,7 +141,7 @@ func main() {
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:                 scheme,
-		Metrics:                metricsOpts,
+		Metrics:                metricsServerOptions,
 		HealthProbeBindAddress: probeAddr,
 
 		LeaderElection:          enableLeaderElection,
