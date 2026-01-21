@@ -20,7 +20,7 @@ import (
 	"flag"
 	"os"
 	"strings"
-	
+
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
@@ -55,7 +55,7 @@ func init() {
 func main() {
 	var (
 		metricsAddr          string
-		secureMetrics 		 bool
+		secureMetrics        bool
 		probeAddr            string
 		enableLeaderElection bool
 		leaderNS             string
@@ -91,23 +91,23 @@ func main() {
 	ctrl.SetLogger(zap.New(zap.UseFlagOptions(&opts)))
 
 	metricsOpts := metricsserver.Options{
-    BindAddress:   metricsAddr,
-    SecureServing: secureMetrics,
+		BindAddress:   metricsAddr,
+		SecureServing: secureMetrics,
 	}
 
 	if secureMetrics {
-	    metricsOpts.FilterProvider =
-	        filters.WithAuthenticationAndAuthorization
+		metricsOpts.FilterProvider =
+			filters.WithAuthenticationAndAuthorization
 	}
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
-	    Scheme:                 scheme,
-	    Metrics:                metricsOpts,
-	    HealthProbeBindAddress: probeAddr,
-	
-	    LeaderElection:          enableLeaderElection,
-	    LeaderElectionID:        "age-secret-operator.age.io",
-	    LeaderElectionNamespace: leaderNS,
+		Scheme:                 scheme,
+		Metrics:                metricsOpts,
+		HealthProbeBindAddress: probeAddr,
+
+		LeaderElection:          enableLeaderElection,
+		LeaderElectionID:        "age-secret-operator.age.io",
+		LeaderElectionNamespace: leaderNS,
 	})
 
 	if err != nil {
