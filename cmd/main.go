@@ -55,14 +55,14 @@ func init() {
 // nolint:gocyclo
 func main() {
 	var (
-		metricsAddr          string
+		metricsAddr                                      string
 		metricsCertPath, metricsCertName, metricsCertKey string
-		secureMetrics        bool
-		enableHTTP2 		 bool
-		probeAddr            string
-		enableLeaderElection bool
-		leaderNS             string
-		tlsOpts []func(*tls.Config)
+		secureMetrics                                    bool
+		enableHTTP2                                      bool
+		probeAddr                                        string
+		enableLeaderElection                             bool
+		leaderNS                                         string
+		tlsOpts                                          []func(*tls.Config)
 
 		// key secret discovery
 		keyNS, keyLabelKey, keyLabelVal string
