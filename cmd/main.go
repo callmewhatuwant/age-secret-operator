@@ -156,18 +156,22 @@ func main() {
 	// webhookServer := webhook.NewServer(webhookServerOptions)
 
 
-	# if len(webhookCertPath) > 0 {
-	# 	setupLog.Info("Initializing webhook certificate watcher using provided certificates",
-	# 		"webhook-cert-path", webhookCertPath, "webhook-cert-name", webhookCertName, "webhook-cert-key", webhookCertKey)
+	// if len(webhookCertPath) > 0 {
+	// 	setupLog.Info(
+	// 		"Initializing webhook certificate watcher using provided certificates",
+	// 		"webhook-cert-path", webhookCertPath,
+	// 		"webhook-cert-name", webhookCertName,
+	// 		"webhook-cert-key", webhookCertKey,
+	// 	)
+	//
+	// 	webhookServerOptions.CertDir = webhookCertPath
+	// 	webhookServerOptions.CertName = webhookCertName
+	// 	webhookServerOptions.KeyName = webhookCertKey
+	// }
+	//
+	// webhookServer := webhook.NewServer(webhookServerOptions)
 
-	# 	webhookServerOptions.CertDir = webhookCertPath
-	# 	webhookServerOptions.CertName = webhookCertName
-	# 	webhookServerOptions.KeyName = webhookCertKey
-	# }
-
-	# webhookServer := webhook.NewServer(webhookServerOptions)
 	
-
 	metricsServerOptions := metricsserver.Options{
 		BindAddress:   metricsAddr,
 		SecureServing: secureMetrics,
