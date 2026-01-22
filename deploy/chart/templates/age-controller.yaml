@@ -35,9 +35,10 @@ spec:
             {{- if .Values.keyNamespaces }}
             - --key-namespace={{ .Values.keyNamespaces }}
             {{- end }}
-            - --metrics-bind-address={{ .Values.}}
-            - --metrics-secure=true={{ .Values.}}
-            - --metrics-auth=false={{ .Values.}}
+            - --metrics-bind-address={{ .Values.metricsService.bind-address}}
+            - --metrics-secure=true={{ .Values.metricsService.secure}}
+            - --metrics-auth=false={{ .Values.metricsService.auth}}
+            
 ---
 apiVersion: v1
 kind: ServiceAccount
