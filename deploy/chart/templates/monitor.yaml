@@ -7,17 +7,15 @@ metadata:
   labels:
     app: age-secret-controller
     release: rancher-monitoring
-  {{- include "age-secrets.labels" . | nindent 4 }}
+    {{- include "age-secrets.labels" . | nindent 4 }}
 spec:
   namespaceSelector:
     matchNames:
       - age-system
-  endpoints:
-  {{- toYaml .Values.ServiceMonitor.endpoints | nindent 2 }}
-{{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/name: age-secret-operator
       {{- include "age-secrets.selectorLabels" . | nindent 6 }}
+  endpoints:
+    {{- toYaml .Values.ServiceMonitor.endpoints | nindent 4 }}
 {{- end }}
-
