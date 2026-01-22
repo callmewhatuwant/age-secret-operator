@@ -14,7 +14,7 @@ spec:
       - age-system
   endpoints:
   {{- toYaml .Values.ServiceMonitor.endpoints | nindent 2 }}
-{{- end }
+{{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/name: age-secret-operator
