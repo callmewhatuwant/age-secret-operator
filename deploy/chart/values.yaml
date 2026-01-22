@@ -62,9 +62,13 @@ ServiceMonitor:
   enabled: false
   endpoints:
     - port: metrics
+      scheme: https
       interval: 30s
       path: /metrics
-
+      tls:
+        insecureSkipVerify: true
+        serverName: localhost
+        
 ## job
 ageKeyRotation:
   schedule: "0 0 1 * *"
