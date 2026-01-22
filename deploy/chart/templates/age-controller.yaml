@@ -33,7 +33,7 @@ spec:
             - --leader-elect={{ default true .Values.ageSecretController.leaderElection.enabled }}
             - --leader-election-namespace={{ default .Release.Namespace .Values.ageSecretController.leaderElection.namespace }}
             {{- if .Values.ageSecretController.keyNamespaces }}
-            - --key-namespace={{ .Values.ageSecretController.keyNamespaces }}
+            - --key-namespace={{ .Values.keyNamespaces }}
             {{- end }}
 ---
 apiVersion: v1
