@@ -13,13 +13,7 @@ spec:
     matchNames:
       - age-system
   endpoints:
-    - port: {{ .Values.metrics.portName }}
-      path: {{ .Values.metrics.path }}
-      scheme: {{ .Values.metrics.monitor.scheme }}
-      honorLabels: {{ .Values.metrics.monitor.honorLabels }}
-      tlsConfig:
-        insecureSkipVerify: {{ .Values.metrics.monitor.tls.insecureSkipVerify }}
-        serverName: {{ .Values.metrics.monitor.tls.serverName }}
+  {{- toYaml .Values.ServiceMonitor.endpoints | nindent 2 }}
 {{- end }
   selector:
     matchLabels:
