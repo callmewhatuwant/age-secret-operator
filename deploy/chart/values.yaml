@@ -53,9 +53,9 @@ metricsService:
   
   type: ClusterIP
   ports:
-    - port: 8080
+    - port: 8443
       name: metrics
-      targetPort: 8080
+      targetPort: 8443
 
 ## monitor for prometheus
 ServiceMonitor:
