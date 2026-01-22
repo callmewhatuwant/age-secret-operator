@@ -123,7 +123,7 @@ ageSecretController:
     ## image
     image:
       repository: callmewhatuwant/age-secrets-operator
-      tag: 0.0.10
+      tag: 0.0.02
     imagePullPolicy: IfNotPresent
 
     ## resources
@@ -150,20 +150,28 @@ ageSecretController:
 
 ## prometheus
 metricsService:
+  bindAddress: 8443
+  secure: true
+  auth: false
+  
   type: ClusterIP
   ports:
-    - port: 8080
+    - port: 8443
       name: metrics
-      targetPort: 8080
+      targetPort: 8443
 
 ## monitor for prometheus
 ServiceMonitor:
   enabled: false
   endpoints:
     - port: metrics
+      scheme: https
       interval: 30s
       path: /metrics
-
+      tlsConfig:
+        insecureSkipVerify: true
+        serverName: localhost
+        
 ## job
 ageKeyRotation:
   schedule: "0 0 1 * *"
@@ -174,7 +182,7 @@ ageKeyRotation:
   ## image for cron and init job
   image:
     repository: callmewhatuwant/age-job
-    tag: "3.22.2-1"
+    tag: "3.23.0"
     pullPolicy: IfNotPresent
 
 ## gui
@@ -185,7 +193,7 @@ ageGui:
   # image for gui
   image:
     repository: callmewhatuwant/age-gui
-    tag: "alpine3.22-perl-1"
+    tag: "alpine3.22-perl"
     pullPolicy: IfNotPresent
 
   resources:
@@ -234,7 +242,7 @@ ageGui:
     tls: []
       # - hosts:
       #     - age-gui.local
-      #   secretName: age-gui-tls
+      #   secretName: age-gui-tl
 ```
 
 ## Enhancements
