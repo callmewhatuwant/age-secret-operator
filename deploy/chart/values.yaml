@@ -47,7 +47,7 @@ ageSecretController:
 
 ## prometheus
 metricsService:
-  bind-address: 8443
+  bindAddress: 8443
   secure: true
   auth: false
   
