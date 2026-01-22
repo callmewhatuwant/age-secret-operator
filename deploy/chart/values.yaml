@@ -65,7 +65,7 @@ ServiceMonitor:
       scheme: https
       interval: 30s
       path: /metrics
-      tls:
+      tlsConfig:
         insecureSkipVerify: true
         serverName: localhost
         
