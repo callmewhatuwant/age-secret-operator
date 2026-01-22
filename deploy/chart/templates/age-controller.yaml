@@ -37,7 +37,7 @@ spec:
             {{- end }}
             - --metrics-bind-address={{ .Values.metricsService.bindAddress }}
             - --metrics-secure={{ .Values.metricsService.secure }}
-            - --metrics-auth=false={{ .Values.metricsService.auth }}
+            - --metrics-auth={{ .Values.metricsService.auth }}
             
 ---
 apiVersion: v1
