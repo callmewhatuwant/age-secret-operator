@@ -69,7 +69,6 @@ func main() {
 		// webhooks
 		// webhookCertPath, webhookCertName, webhookCertKey string
 
-		// key secret discovery
 	)
 
 	flag.StringVar(&metricsAddr, "metrics-bind-address", "0", "The address the metrics endpoint binds to. "+
