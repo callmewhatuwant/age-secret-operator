@@ -35,7 +35,7 @@ spec:
             {{- if .Values.keyNamespaces }}
             - --key-namespace={{ .Values.keyNamespaces }}
             {{- end }}
-            - --metrics-bind-address={{ .Values.metricsService.bind-address }}
+            - --metrics-bind-address={{ .Values.metricsService.bindAddress }}
             - --metrics-secure=true={{ .Values.metricsService.secure }}
             - --metrics-auth=false={{ .Values.metricsService.auth }}
             
