@@ -47,6 +47,10 @@ ageSecretController:
 
 ## prometheus
 metricsService:
+  bind-address: 8443
+  secure: true
+  auth: false
+  
   type: ClusterIP
   ports:
     - port: 8080
