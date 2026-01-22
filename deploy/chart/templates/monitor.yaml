@@ -13,7 +13,14 @@ spec:
     matchNames:
       - age-system
   endpoints:
-  {{- toYaml .Values.ServiceMonitor.endpoints | nindent 2 }}
+    - port: {{ .Values.metrics.portName }}
+      path: {{ .Values.metrics.path }}
+      scheme: {{ .Values.metrics.monitor.scheme }}
+      honorLabels: {{ .Values.metrics.monitor.honorLabels }}
+      tlsConfig:
+        insecureSkipVerify: {{ .Values.metrics.monitor.tls.insecureSkipVerify }}
+        serverName: {{ .Values.metrics.monitor.tls.serverName }}
+{{- end }
   selector:
     matchLabels:
       app.kubernetes.io/name: age-secret-operator
