@@ -95,7 +95,6 @@ rules:
     resources: ["secrets"]
     verbs: ["get","list","create","update","patch"]
 ---
-{{- end }}
 
 {{- range $ns := $namespaces }}
 apiVersion: rbac.authorization.k8s.io/v1
