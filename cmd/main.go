@@ -58,15 +58,15 @@ func main() {
 	var (
 		metricsAddr                                      string
 		metricsCertPath, metricsCertName, metricsCertKey string
-		secureMetrics  									 bool
-		metricsAuth 									 bool
+		secureMetrics                                    bool
+		metricsAuth                                      bool
 		// webhooks
 		// webhookCertPath, webhookCertName, webhookCertKey string
-		enableHTTP2                                      bool
-		probeAddr                                        string
-		enableLeaderElection                             bool
-		leaderNS                                         string
-		tlsOpts                                          []func(*tls.Config)
+		enableHTTP2          bool
+		probeAddr            string
+		enableLeaderElection bool
+		leaderNS             string
+		tlsOpts              []func(*tls.Config)
 
 		// key secret discovery
 		keyNS, keyLabelKey, keyLabelVal string
@@ -76,30 +76,30 @@ func main() {
 		"Use :8443 for HTTPS or :8080 for HTTP, or leave as 0 to disable the metrics service.")
 	flag.BoolVar(&secureMetrics, "metrics-secure", true, "Serve metrics over HTTPS.")
 	flag.BoolVar(&metricsAuth, "metrics-auth", false,
-    	"Enable authentication/authorization on metrics endpoint")
+		"Enable authentication/authorization on metrics endpoint")
 
 	// webhooks
 	// flag.StringVar(&webhookCertPath, "webhook-cert-path", "", "The directory that contains the webhook certificate.")
 	// flag.StringVar(&webhookCertName, "webhook-cert-name", "tls.crt", "The name of the webhook certificate file.")
 	// flag.StringVar(&webhookCertKey, "webhook-cert-key", "tls.key", "The name of the webhook key file.")
-	
+
 	flag.StringVar(&probeAddr, "health-probe-bind-address", ":8081", "The address the probe endpoint binds to.")
-	
+
 	flag.BoolVar(&enableLeaderElection, "leader-elect", false,
 		"Enable leader election for controller manager. "+
 			"Enabling this will ensure there is only one active controller manager.")
 	flag.StringVar(&leaderNS, "leader-election-namespace", "",
 		"Namespace for the leader election Lease (defaults to POD_NAMESPACE or age-system).")
-	
+
 	flag.StringVar(&keyNS, "key-namespace", "age-secrets", "Namespace containing AGE key Secrets.")
 	flag.StringVar(&keyLabelKey, "key-label-key", "app", "Label key for AGE key Secrets.")
 	flag.StringVar(&keyLabelVal, "key-label-val", "age-key", "Label value for AGE key Secrets.")
-	
+
 	flag.StringVar(&metricsCertPath, "metrics-cert-path", "",
 		"The directory that contains the metrics server certificate.")
 	flag.StringVar(&metricsCertName, "metrics-cert-name", "tls.crt", "The name of the metrics server certificate file.")
 	flag.StringVar(&metricsCertKey, "metrics-cert-key", "tls.key", "The name of the metrics server key file.")
-	
+
 	flag.BoolVar(&enableHTTP2, "enable-http2", false,
 		"If set, HTTP/2 will be enabled for the metrics and webhook servers")
 	opts := zap.Options{
@@ -119,7 +119,7 @@ func main() {
 			leaderNS = "age-system"
 		}
 	}
-	
+
 	// if the enable-http2 flag is false (the default), http/2 should be disabled
 	// due to its vulnerabilities. More specifically, disabling http/2 will
 	// prevent from being vulnerable to the HTTP/2 Stream Cancellation and
@@ -155,7 +155,6 @@ func main() {
 	// }
 	//
 	// webhookServer := webhook.NewServer(webhookServerOptions)
-
 
 	// if len(webhookCertPath) > 0 {
 	// 	setupLog.Info(
@@ -204,8 +203,8 @@ func main() {
 	}
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
-		Scheme:                 scheme,
-		Metrics:                metricsServerOptions,
+		Scheme:  scheme,
+		Metrics: metricsServerOptions,
 		// WebhookServer:          webhookServer,
 		HealthProbeBindAddress: probeAddr,
 
@@ -242,7 +241,7 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "AgeSecret")
 		os.Exit(1)
 	}
-	
+
 	// nolint:goconst
 	// if os.Getenv("ENABLE_WEBHOOKS") != "false" {
 	//     if err := webhookv1alpha1.SetupServiceLevelObjectiveWebhookWithManager(mgr); err != nil {
