@@ -34,7 +34,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/metrics/filters"
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
-	// for webhooks
+	// webhooks
 	// "sigs.k8s.io/controller-runtime/pkg/webhook"
 
 	securityv1alpha1 "github.com/callmewhatuwant/age-secret-operator/api/v1alpha1"
@@ -72,7 +72,6 @@ func main() {
 		keyNS, keyLabelKey, keyLabelVal string
 	)
 
-	//flag.StringVar(&metricsAddr, "metrics-bind-address", ":8443", "Metrics bind address.")
 	flag.StringVar(&metricsAddr, "metrics-bind-address", "0", "The address the metrics endpoint binds to. "+
 		"Use :8443 for HTTPS or :8080 for HTTP, or leave as 0 to disable the metrics service.")
 	flag.BoolVar(&secureMetrics, "metrics-secure", true, "Serve metrics over HTTPS.")
