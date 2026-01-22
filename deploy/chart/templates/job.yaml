@@ -60,6 +60,9 @@ spec:
                 --from-file=private=/tmp/key.txt \
                 --from-literal=public="$PUB"
 
+              kubectl -n "$NS" annotate secret "$NAME" active="true" --overwrite
+              kubectl -n "$NS" label secret "$NAME" app=age-key --overwrite
+
 ---
 {{- end }}
 {{- end }}
