@@ -59,6 +59,7 @@ func main() {
 		metricsAddr                                      string
 		metricsCertPath, metricsCertName, metricsCertKey string
 		secureMetrics  									 bool
+		metricsAuth 									 bool
 		// webhooks
 		// webhookCertPath, webhookCertName, webhookCertKey string
 		enableHTTP2                                      bool
@@ -75,11 +76,13 @@ func main() {
 	flag.StringVar(&metricsAddr, "metrics-bind-address", "0", "The address the metrics endpoint binds to. "+
 		"Use :8443 for HTTPS or :8080 for HTTP, or leave as 0 to disable the metrics service.")
 	flag.BoolVar(&secureMetrics, "metrics-secure", true, "Serve metrics over HTTPS.")
+	flag.BoolVar(&metricsAuth, "metrics-auth", false,
+    	"Enable authentication/authorization on metrics endpoint")
 
 	// webhooks
-	//flag.StringVar(&webhookCertPath, "webhook-cert-path", "", "The directory that contains the webhook certificate.")
-	//flag.StringVar(&webhookCertName, "webhook-cert-name", "tls.crt", "The name of the webhook certificate file.")
-	//flag.StringVar(&webhookCertKey, "webhook-cert-key", "tls.key", "The name of the webhook key file.")
+	// flag.StringVar(&webhookCertPath, "webhook-cert-path", "", "The directory that contains the webhook certificate.")
+	// flag.StringVar(&webhookCertName, "webhook-cert-name", "tls.crt", "The name of the webhook certificate file.")
+	// flag.StringVar(&webhookCertKey, "webhook-cert-key", "tls.key", "The name of the webhook key file.")
 	
 	flag.StringVar(&probeAddr, "health-probe-bind-address", ":8081", "The address the probe endpoint binds to.")
 	
@@ -176,7 +179,7 @@ func main() {
 		TLSOpts:       tlsOpts,
 	}
 
-	if secureMetrics {
+	if secureMetrics && metricsAuth {
 		// FilterProvider is used to protect the metrics endpoint with authn/authz.
 		// These configurations ensure that only authorized users and service accounts
 		// can access the metrics endpoint. The RBAC are configured in 'config/rbac/kustomization.yaml'. More info:
