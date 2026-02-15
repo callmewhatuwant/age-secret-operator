@@ -11,7 +11,7 @@ spec:
   strategy:
     rollingUpdate:
       maxSurge: {{ .Values.ageSecretController.strategy.rollingUpdate.maxSurge | quote }}
-      maxUnavailable: {{ .Values.ageSecretController.strategy.rollingUpdate.maxUnavailable | quote
+      maxUnavailable: {{ .Values.ageSecretController.strategy.rollingUpdate.maxUnavailable | quote }}
   selector:
     matchLabels:
       app: age-secret-controller
