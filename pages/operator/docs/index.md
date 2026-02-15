@@ -27,7 +27,6 @@ Also Im not
 
 Note: I am relatively new to Go, so contributions and feedback are welcome!
 
-
 ## Getting started
 
 * create crd ressource
