@@ -46,7 +46,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.33.1
         with:
           version: v0.69.1
-          scan-args: "--scanners vuln"
+          scanners: "vuln"
           image-ref: "${{ github.event.inputs.img_op }}:${{ github.event.inputs.tag_op }}"
           format: sarif
           output: "trivy-results-age-secrets-operator.sarif"
@@ -63,7 +63,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.33.1
         with:
           version: v0.69.1
-          scan-args: "--scanners vuln"
+          scanners: "vuln"
           image-ref: "${{ github.event.inputs.img_job }}:${{ github.event.inputs.tag_job }}"
           format: sarif
           output: "trivy-results-age-job.sarif"
@@ -80,7 +80,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.33.1
         with:
           version: v0.69.1
-          scan-args: "--scanners vuln"
+          scanners: "vuln"
           image-ref: "${{ github.event.inputs.img_gui }}:${{ github.event.inputs.tag_gui }}"
           format: sarif
           output: "trivy-results-age-gui.sarif"
