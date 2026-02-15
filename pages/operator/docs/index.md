@@ -89,6 +89,7 @@ spec:
       -----END AGE ENCRYPTED FILE-----
   # recipients:
   # define public key used as value if u want
+  # controller will try this key first
   #   - string
 ```
 
@@ -125,7 +126,6 @@ ageSecretController:
     rollingUpdate:
       maxSurge: "25%"
       maxUnavailable: "50%"
-
 
   controller:
     ## image
@@ -170,7 +170,7 @@ metricsService:
 
 ## monitor for prometheus
 ServiceMonitor:
-  enabled: true
+  enabled: false
   endpoints:
     - port: metrics
       scheme: https
@@ -245,7 +245,7 @@ ageGui:
 
   # ingress for gui
   ingress:
-    enabled: true
+    enabled: false
     host: age-gui.local
     ingressClassName: nginx
     annotations: {}
