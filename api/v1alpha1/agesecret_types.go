@@ -33,7 +33,6 @@ type AgeSecretTemplate struct {
 type AgeSecretSpec struct {
 	// REQUIRED: Encrypted data (AGE armored or binary); key = Secret field name.
 	// +kubebuilder:validation:Required
-	// +kubebuilder:pruning:PreserveUnknownFields
 	EncryptedData map[string]string `json:"encryptedData"`
 
 	// Secret template (e.g., Type: Opaque).
