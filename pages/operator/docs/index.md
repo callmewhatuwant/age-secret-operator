@@ -110,9 +110,9 @@ spec:
       cWZpL09JTnFCVFFZbXRFQUY2QTdTbm8KdkZOvCXRqENpCw9ncrVP+qzDBTKwntfi
       ihgfMGuoy3Q37Dkqsw==
       -----END AGE ENCRYPTED FILE-----
+  # define public key used with: recipients if you want to
+  # the controller will try this key first
   # recipients:
-  # define public key used as value if u want
-  # controller will try this key first
   #   - string
 ```
 
