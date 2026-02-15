@@ -8,10 +8,14 @@ As the name suggests, it uses age to decrypt secrets. The controller will create
 You can use these keys to encrypt your secrets, store them in Git or elsewhere, and apply them to the cluster. 
 The controller will then check the encrypted secrets and decrypt them, creating a Kubernetes Secret from them.
 
-I also created this Operator to address Bitnami’s recent licensing changes affecting Helm charts and images.
+The controller also exposes metrics, which can be monitored by creating a ServiceMonitor with the chart if desired.
+Additionally, a GUI is available that allows you to encrypt and decrypt secrets interactively.
+A CLI tool is also planned, which will allow users to perform encryption and decryption directly from the command line.
+
+In addition, this Operator was created to address Bitnami’s recent licensing changes affecting Helm charts and images.
 Although Bitnami states that the SealSecrets Operator chart and images will remain free, it’s unclear what Broadcom might do next.
 
-I also did not particularly like the way they built their Operator. 
+The way their Operator was built did not feel right to me.
 Their tools often contain multiple CVEs, and the CRDs they create are not the sole source of truth. 
 For example, manually changing a secret can affect the CRDs, which will then report that they are no longer managed by SealSecrets. 
 In my opinion, if you deploy CRDs, they should be the only source of truth. Any updates should be made through the CRDs themselves, not the resources created from them.
