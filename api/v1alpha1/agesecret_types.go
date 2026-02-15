@@ -56,8 +56,8 @@ type AgeSecretStatus struct {
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// Use ShortName = sea (as requested).
-// +kubebuilder:resource:path=agesecrets,scope=Namespaced,shortName=sea
+// Use ShortName = ase (as requested).
+// +kubebuilder:resource:path=agesecrets,scope=Namespaced,shortName=aes
 // Printer columns (shown in `kubectl get agesecrets`).
 // +kubebuilder:printcolumn:name="Secret",type=string,JSONPath=`.status.secretName`
 // +kubebuilder:printcolumn:name="Age",type=integer,JSONPath=`.metadata.generation`
