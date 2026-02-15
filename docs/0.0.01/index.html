@@ -427,9 +427,12 @@ The code and chart is avalible at <a href="https://github.com/callmewhatuwant/ag
 As the name suggests, it uses age to decrypt secrets. The controller will create keys in the namespaces you specify.
 You can use these keys to encrypt your secrets, store them in Git or elsewhere, and apply them to the cluster. 
 The controller will then check the encrypted secrets and decrypt them, creating a Kubernetes Secret from them.</p>
-<p>I also created this Operator to address Bitnami’s recent licensing changes affecting Helm charts and images.
+<p>The controller also exposes metrics, which can be monitored by creating a ServiceMonitor with the chart if desired.
+Additionally, a GUI is available that allows you to encrypt and decrypt secrets interactively.
+A CLI tool is also planned, which will allow users to perform encryption and decryption directly from the command line.</p>
+<p>In addition, this Operator was created to address Bitnami’s recent licensing changes affecting Helm charts and images.
 Although Bitnami states that the SealSecrets Operator chart and images will remain free, it’s unclear what Broadcom might do next.</p>
-<p>I also did not particularly like the way they built their Operator. 
+<p>The way their Operator was built did not feel right to me.
 Their tools often contain multiple CVEs, and the CRDs they create are not the sole source of truth. 
 For example, manually changing a secret can affect the CRDs, which will then report that they are no longer managed by SealSecrets. 
 In my opinion, if you deploy CRDs, they should be the only source of truth. Any updates should be made through the CRDs themselves, not the resources created from them.</p>
@@ -514,9 +517,9 @@ Suggestions are never blindly copied. Each one is reviewed and applied if needed
 </span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">      </span><span class="no">cWZpL09JTnFCVFFZbXRFQUY2QTdTbm8KdkZOvCXRqENpCw9ncrVP+qzDBTKwntfi</span>
 </span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">      </span><span class="no">ihgfMGuoy3Q37Dkqsw==</span>
 </span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">      </span><span class="no">-----END AGE ENCRYPTED FILE-----</span>
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">  </span><span class="c1"># recipients:</span>
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">  </span><span class="c1"># define public key used as value if u want</span>
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">  </span><span class="c1"># controller will try this key first</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">  </span><span class="c1"># define public key used with: recipients if you want to</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">  </span><span class="c1"># the controller will try this key first</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">  </span><span class="c1"># recipients:</span>
 </span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">  </span><span class="c1">#   - string</span>
 </span></code></pre></div>
 <ul>
