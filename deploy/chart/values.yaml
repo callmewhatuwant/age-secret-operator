@@ -16,6 +16,14 @@ ageSecretController:
   ## replicas for ha
   replicas: 3
 
+  # strategy for updating
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "25%"
+
+
   controller:
     ## image
     image:
@@ -85,7 +93,16 @@ ageKeyRotation:
 ## gui
 ageGui:
   enabled: true
+
+  # replicas (ha is not tested)
   replicas: 1
+  
+  # strategy for updating
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "25%"
 
   # image for gui
   image:
@@ -101,13 +118,6 @@ ageGui:
       cpu: 100m
       memory: 64Mi
     
-  # strategy for updating
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: "25%"
-      maxUnavailable: "25%"
-
   #sec context
   containerSecurityContext:
     allowPrivilegeEscalation: false
