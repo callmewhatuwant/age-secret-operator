@@ -22,7 +22,10 @@ I initially removed the default commented-out code but later re-added it as opti
 This way, anyone who wants to fork the project can make use of these features if needed.
 
 I also consulted AI at certain points to get ideas for implementation. 
-I never blindly copy-paste. I always review the suggestions and import as needed.
+Do not blindly copy-paste. Always review the suggestions and use them as needed.
+Also Im not 
+
+Note: I am relatively new to Go, so contributions and feedback are welcome!
 
 
 ## Getting started
