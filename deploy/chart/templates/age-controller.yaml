@@ -8,6 +8,10 @@ metadata:
   {{- include "age-secrets.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.ageSecretController.replicas }}
+  strategy:
+    rollingUpdate:
+      maxSurge: {{ .Values.ageSecretController.strategy.rollingUpdate.maxSurge | quote }}
+      maxUnavailable: {{ .Values.ageSecretController.strategy.rollingUpdate.maxUnavailable | quote
   selector:
     matchLabels:
       app: age-secret-controller
