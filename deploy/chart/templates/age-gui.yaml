@@ -12,8 +12,7 @@ spec:
   strategy:
     rollingUpdate:
       maxSurge: {{ .Values.ageGui.strategy.rollingUpdate.maxSurge | quote }}
-      maxUnavailable: {{ .Values.ageGui.strategy.rollingUpdate.maxUnavailable | quote
-        }}
+      maxUnavailable: {{ .Values.ageGui.strategy.rollingUpdate.maxUnavailable | quote }}
     type: {{ .Values.ageGui.strategy.type | quote }}
   selector:
     matchLabels:
