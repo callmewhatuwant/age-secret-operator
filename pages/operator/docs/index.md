@@ -103,12 +103,12 @@ kubectl get secret -n test
 ```yaml
 ## name override
 fullnameOverride: age-secret-controller
-  
-## namespaces in wich new keys will be generated
-## controller will also check in them for keys to decrypt  
-keyNamespaces: "age-secrets"
 
-## controller values  
+## namespaces in wich new keys will be generated
+## controller will also check in them for keys to decrypt
+keyNamespaces: "age-secrets,test"
+
+## controller values
 ageSecretController:
 
 ## leader election
@@ -119,11 +119,19 @@ ageSecretController:
   ## replicas for ha
   replicas: 3
 
+  # strategy for updating
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "50%"
+
+
   controller:
     ## image
     image:
       repository: callmewhatuwant/age-secrets-operator
-      tag: 0.0.02
+      tag: 0.0.01
     imagePullPolicy: IfNotPresent
 
     ## resources
@@ -153,7 +161,7 @@ metricsService:
   bindAddress: 8443
   secure: true
   auth: false
-  
+
   type: ClusterIP
   ports:
     - port: 8443
@@ -162,7 +170,7 @@ metricsService:
 
 ## monitor for prometheus
 ServiceMonitor:
-  enabled: false
+  enabled: true
   endpoints:
     - port: metrics
       scheme: https
@@ -171,7 +179,7 @@ ServiceMonitor:
       tlsConfig:
         insecureSkipVerify: true
         serverName: localhost
-        
+
 ## job
 ageKeyRotation:
   schedule: "0 0 1 * *"
@@ -188,12 +196,21 @@ ageKeyRotation:
 ## gui
 ageGui:
   enabled: true
+
+  # replicas (ha is not tested)
   replicas: 1
+
+  # strategy for updating
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "25%"
+      maxUnavailable: "50%"
 
   # image for gui
   image:
     repository: callmewhatuwant/age-gui
-    tag: "alpine3.22-perl"
+    tag: "alpine3.23-perl"
     pullPolicy: IfNotPresent
 
   resources:
@@ -203,13 +220,6 @@ ageGui:
     requests:
       cpu: 100m
       memory: 64Mi
-    
-  # strategy for updating
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: "25%"
-      maxUnavailable: "25%"
 
   #sec context
   containerSecurityContext:
@@ -235,14 +245,14 @@ ageGui:
 
   # ingress for gui
   ingress:
-    enabled: false
+    enabled: true
     host: age-gui.local
     ingressClassName: nginx
     annotations: {}
     tls: []
       # - hosts:
       #     - age-gui.local
-      #   secretName: age-gui-tl
+      #   secretName: age-gui-tls
 ```
 
 ## Enhancements
