@@ -59,7 +59,7 @@ jobs:
           #limit-severities-for-sarif: true
 
       - name: Upload age-secrets-operator SARIF
-        uses: github/codeql-action/upload-sarif@v4.31.6
+        uses: github/codeql-action/upload-sarif@v4.33.0
         with:
           sarif_file: "trivy-results-age-secrets-operator.sarif"
           category: "trivy-op"
@@ -76,7 +76,7 @@ jobs:
           #limit-severities-for-sarif: true
 
       - name: Upload age-job SARIF
-        uses: github/codeql-action/upload-sarif@v4.31.6
+        uses: github/codeql-action/upload-sarif@v4.33.0
         with:
           sarif_file: "trivy-results-age-job.sarif"
           category: "trivy-job"
@@ -93,7 +93,7 @@ jobs:
           #limit-severities-for-sarif: true
 
       - name: Upload age-gui SARIF
-        uses: github/codeql-action/upload-sarif@v4.31.6
+        uses: github/codeql-action/upload-sarif@v4.33.0
         with:
           sarif_file: "trivy-results-age-gui.sarif"
           category: "trivy-gui"
