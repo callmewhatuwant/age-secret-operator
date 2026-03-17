@@ -1,11 +1,11 @@
 # Docs
 
 Welcome to the documentation.</br>
-The code and chart is avalible at [github.com](https://github.com/callmewhatuwant/age-secret-operator){target="_blank"}.
-
-The purpose of this Operator is to create secrets from a CRD resource. This resource contains the encrypted secrets.
-As the name suggests, it uses age to decrypt secrets. The controller will create keys in the namespaces you specify.
-You can use these keys to encrypt your secrets, store them in Git or elsewhere, and apply them to the cluster. 
+The code and chart is avalible at [github.com](https://github.com/callmewhatuwant/age-secret-operator){target="_blank"}.  
+The purpose of this operator is to create secrets from a CRD resource. The CRD resource contains encrypted data.  
+As the name suggests, it uses age to decrypt this data. To do so, keys must be present as secrets in your Kubernetes cluster.  
+The controller will create these keys automatically after installation and generate new ones every month in the namespaces you specify.  
+You can use these keys to encrypt your secrets, store them in Git or elsewhere, and apply them to the cluster.  
 The controller will then check the encrypted secrets and decrypt them, creating a Kubernetes Secret from them.
 
 The controller also exposes metrics, which can be monitored by creating a ServiceMonitor with the chart if desired.
@@ -42,6 +42,7 @@ kubectl apply -f https://raw.githubusercontent.com/callmewhatuwant/age-secret-op
 * install
 
 ```bash
+kubectl create ns age-secrets \
 helm repo add age-secrets-operator \
 https://age-secrets.com
 helm install age-secrets-operator age-secrets-operator/age-secrets \
@@ -72,10 +73,10 @@ sudo apt install age
 * get key
 
 ```bash
-LATEST=$(kubectl get secrets -n age-system --no-headers -o custom-columns=":metadata.name" \
+LATEST=$(kubectl get secrets -n age-secrets --no-headers -o custom-columns=":metadata.name" \
   | grep '^age-key-' | sort | tail -n1)
 
-PUBLIC_KEY=$(kubectl get secret "$LATEST" -n age-system -o jsonpath='{.data.public}' | base64 --decode)
+PUBLIC_KEY=$(kubectl get secret "$LATEST" -n age-secrets -o jsonpath='{.data.public}' | base64 --decode)
 
 ## public key:
 echo "$PUBLIC_KEY"
