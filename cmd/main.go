@@ -227,9 +227,9 @@ func main() {
 		setupLog.Error(err, "unable to start manager")
 		os.Exit(1)
 	}
-	
+
 	split := strings.Split(keyNS, ",")
-	namespaces :=  split
+	namespaces := split
 
 	if err := (&controller.AgeSecretReconciler{
 		Client:       mgr.GetClient(),
