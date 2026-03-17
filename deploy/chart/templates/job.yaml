@@ -16,7 +16,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "age-secrets.fullname" $ }}-age-key-rotation-init
+  name: {{ include "age-secrets.fullname" $ }}-key-init
   namespace: {{ $ns }}
   labels:
     {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
