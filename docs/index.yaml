@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  age-secrets-operator:
+  - apiVersion: v2
+    appVersion: 0.0.01
+    created: "2026-03-17T12:24:17.088847657Z"
+    description: A Helm chart for Kubernetes
+    digest: fde851eaed14311d90118910972e9f33a0a820854ea9aad6054a7312355fb08e
+    name: age-secrets-operator
+    type: application
+    urls:
+    - https://age-secrets.com/age-secrets-operator-0.0.01.tgz
+    version: 0.0.01
+generated: "2026-03-17T12:24:17.088136158Z"
