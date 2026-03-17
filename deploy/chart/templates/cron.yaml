@@ -14,7 +14,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "age-secrets.fullname" $ }}-age-key-rotation
+  name: {{ include "age-secrets.fullname" $ }}-key-rotation
   namespace: {{ $ns }}
   labels:
     {{- $base := (include "age-secrets.labels" $ | fromYaml) }}
