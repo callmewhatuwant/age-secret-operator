@@ -7,7 +7,7 @@ This Operator uses [age](https://github.com/filosottile/age){target="_blank"} â€
 To do so, keys must be present as secrets in your Kubernetes cluster.
 The controller will create these keys automatically after installation and generate new ones every month in the namespaces you specify.
 You can use these keys to encrypt your secrets, store them in Git or elsewhere, and apply them to the cluster as a crd.
-The controller will then check the crd and decrypt the data in them, creating a Kubernetes Secret from that data.
+The controller will then check the crd and decrypt the data in them, creating a Kubernetes Secret from that.
 
 The controller also exposes metrics, which can be monitored by creating a ServiceMonitor with the chart if desired.
 Additionally, a GUI is available that allows you to encrypt and decrypt secrets interactively.
