@@ -9,7 +9,7 @@ The Controller can be installed via helm or manifests (helm is prefered).
 Also the Crd must be installed.
 After the deplyoment, a job runs wich creats a secret, with an age private and public key.
 Age is a simple, modern and secure encryption tool. 
-see: <a href="https://github.com/filosottile/age" target="_blank">age</a>
+checkout: <a href="https://github.com/filosottile/age" target="_blank">age</a>.
 This secret should be used to encrypt your secret values.
 Every first of the month a new secret for encrypting will be generated.
 The controller can use all keys in specified namespaces to decrypt the crd component in every namespace.
