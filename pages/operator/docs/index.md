@@ -1,9 +1,10 @@
 # Docs
 
 Welcome to the documentation.</br>
-The code and chart is avalible at [github.com](https://github.com/callmewhatuwant/age-secret-operator){target="_blank"}.
-The purpose of this operator is to create secrets from a CRD resource. The CRD resource contains encrypted data.
-As the name suggests, it uses age to decrypt this data. To do so, keys must be present as secrets in your Kubernetes cluster.
+The code and chart is avalible at [github.com](https://github.com/callmewhatuwant/age-secret-operator){target="_blank"}.  
+
+This Operator uses [age](https://github.com/filosottile/age){target="_blank"} – a simple, modern, and secure encryption tool – to encrypt and decrypt secrets from a crd. 
+To do so, keys must be present as secrets in your Kubernetes cluster.
 The controller will create these keys automatically after installation and generate new ones every month in the namespaces you specify.
 You can use these keys to encrypt your secrets, store them in Git or elsewhere, and apply them to the cluster.
 The controller will then check the encrypted secrets and decrypt them, creating a Kubernetes Secret from them.
