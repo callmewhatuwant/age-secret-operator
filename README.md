@@ -1,7 +1,7 @@
 # age-secret-operator
 
-* Controller to decrypt secrets from a crd.
-* Secrets must be encrypted via age.
+* Controller to decrypt secrets from a crd
+* Secrets must be encrypted via age
 
 ## Description
 
@@ -10,7 +10,7 @@ Also the Crd must be installed.
 After the deplyoment, a job runs wich creats a secret, with an age private and public key.
 This secret should be used to encrypt your secret values.
 Every first of the month a new secret for encrypting will be generated.
-The controller can use all keys in his namespace to decrypt the crd component in every namespace.
+The controller can use all keys in specified namespaces to decrypt the crd component in every namespace.
 Please not if you delete a secret you will not be able to decrypt the crd resource wich got encrypted
 with these keys. 
 
@@ -24,7 +24,7 @@ with these keys.
 
 ## Helm
 
-**Checkout my docs wich supports different chart versions**
+**Checkout my docs which supports different chart versions**
 
 <a href="https://age-secrets.com" target="_blank">age-secrets.com</a>
 
