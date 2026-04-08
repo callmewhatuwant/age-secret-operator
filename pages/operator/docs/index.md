@@ -14,7 +14,7 @@ Additionally, a GUI is available that allows you to encrypt and decrypt secrets 
 A CLI tool is also planned, which will allow users to perform encryption and decryption directly from the command line.
 
 In addition, this Operator was created to address Bitnami’s recent licensing changes affecting Helm charts and images.
-Although Bitnami states that the SealSecrets Operator chart and images will remain free, it’s unclear what Broadcom might do next.
+Although Bitnami states that the Sealed Secrets Operator chart and images will remain free, it’s unclear what Broadcom might do next.
 
 The way their Operator was built did not feel right to me.
 Their tools often contain multiple CVEs, and the CRDs they create are not the sole source of truth. 
